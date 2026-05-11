@@ -174,4 +174,52 @@ This generated password is for development use only. Your security configuration
 ""2026-05-11 14:05:07,341 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
 ""2026-05-11 14:05:07,342 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
 ""2026-05-11 14:05:07,343 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+""2026-05-11 17:16:19,094 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Starting CinetimeApplicationTests using Java 17.0.18 on MacBurak-Mini.lan with PID 44961 (started by burak in /Users/burak/Desktop/developer/cinetime)
+""2026-05-11 17:16:19,095 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:No active profile set, falling back to 1 default profile: "default"
+""2026-05-11 17:16:19,318 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2026-05-11 17:16:19,322 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+""2026-05-11 17:16:19,486 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2026-05-11 17:16:19,509 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
+""2026-05-11 17:16:19,559 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2026-05-11 17:16:19,589 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2026-05-11 17:16:19,687 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2026-05-11 17:16:19,694 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+""2026-05-11 17:16:19,798 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2026-05-11 17:16:19,803 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-11 17:16:19,962 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""2026-05-11 17:16:20,400 WARN  [main] org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration:
+
+Using generated security password: 3e8f7b93-5617-40df-a7a8-998c875e3b2b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+""2026-05-11 17:16:20,448 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@254513e8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@74450c9b, org.springframework.security.web.context.SecurityContextPersistenceFilter@2059f785, org.springframework.security.web.header.HeaderWriterFilter@784212, org.springframework.security.web.csrf.CsrfFilter@2762253e, org.springframework.security.web.authentication.logout.LogoutFilter@7e2a76be, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@15f11bfb, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@72b10258, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@74f89bad, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@5bc14211, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2dc73024, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@42cd0fc6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ad50b02, org.springframework.security.web.session.SessionManagementFilter@5cf072ea, org.springframework.security.web.access.ExceptionTranslationFilter@4e357792, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7b7cf475]
+""2026-05-11 17:16:20,474 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Started CinetimeApplicationTests in 1.474 seconds (JVM running for 1.777)
+""2026-05-11 17:16:20,569 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-11 17:16:20,569 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2026-05-11 17:16:20,571 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+""2026-05-11 22:23:00,730 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Starting CinetimeApplicationTests using Java 17.0.18 on MacBurak-Mini.lan with PID 46460 (started by burak in /Users/burak/Desktop/developer/cinetime)
+""2026-05-11 22:23:00,730 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:No active profile set, falling back to 1 default profile: "default"
+""2026-05-11 22:23:00,946 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2026-05-11 22:23:00,951 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+""2026-05-11 22:23:01,118 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2026-05-11 22:23:01,140 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
+""2026-05-11 22:23:01,189 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2026-05-11 22:23:01,223 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2026-05-11 22:23:01,325 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2026-05-11 22:23:01,332 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+""2026-05-11 22:23:01,420 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2026-05-11 22:23:01,424 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-11 22:23:01,533 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""2026-05-11 22:23:01,886 WARN  [main] org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration:
+
+Using generated security password: e3d976fd-c4e2-496d-8439-19927519f0ce
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+""2026-05-11 22:23:01,931 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@705d914f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6212ea52, org.springframework.security.web.context.SecurityContextPersistenceFilter@17e6b7e4, org.springframework.security.web.header.HeaderWriterFilter@29ccab93, org.springframework.security.web.csrf.CsrfFilter@3636f2a7, org.springframework.security.web.authentication.logout.LogoutFilter@de0c402, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@a1b7549, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@4a6ef712, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@65b5b5ed, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@701c482e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@33399052, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@11c25846, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6595ffce, org.springframework.security.web.session.SessionManagementFilter@20155dae, org.springframework.security.web.access.ExceptionTranslationFilter@453a30f8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2e62e227]
+""2026-05-11 22:23:01,953 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Started CinetimeApplicationTests in 1.314 seconds (JVM running for 1.597)
+""2026-05-11 22:23:02,045 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-11 22:23:02,046 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2026-05-11 22:23:02,047 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
 "
