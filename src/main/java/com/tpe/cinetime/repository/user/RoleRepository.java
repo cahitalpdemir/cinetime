@@ -1,4 +1,4 @@
-package com.tpe.cinetime.repository;
+package com.tpe.cinetime.repository.user;
 
 import com.tpe.cinetime.entity.Role;
 import com.tpe.cinetime.enums.RoleName;
@@ -13,4 +13,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
     @Query("SELECT r FROM Role r WHERE r.roleName = 'CUSTOMER'")
     Optional<Role> findByRoleName(RoleName roleName);
+
+    boolean existsByRoleName(RoleName roleName);
 }

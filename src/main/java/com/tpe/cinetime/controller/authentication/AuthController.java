@@ -1,8 +1,10 @@
-package com.tpe.cinetime.controller;
+package com.tpe.cinetime.controller.authentication;
 
-import com.tpe.cinetime.payload.request.RegisterRequestDTO;
+import com.tpe.cinetime.payload.request.authentication.LoginRequestDTO;
+import com.tpe.cinetime.payload.request.authentication.RegisterRequestDTO;
+import com.tpe.cinetime.payload.response.authentication.LoginResponseDTO;
 import com.tpe.cinetime.payload.response.ResponseMessage;
-import com.tpe.cinetime.payload.response.UserResponseDTO;
+import com.tpe.cinetime.payload.response.user.UserResponseDTO;
 import com.tpe.cinetime.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,16 @@ public class AuthController {
 
 
         return ResponseEntity.ok(authService.register(registerRequestDTO));
-
-
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponseMessage<LoginResponseDTO>> login(
+            @Valid
+            @RequestBody
+            LoginRequestDTO loginRequestDTO){
+
+        return ResponseEntity.ok(authService.login(loginRequestDTO));
+    }
+
+
 }

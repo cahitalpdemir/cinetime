@@ -1,344 +1,113 @@
-"2026-05-14 00:01:58,405 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 63720 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:01:58,408 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:01:58,646 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:01:58,664 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 14 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:01:58,839 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:01:58,842 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:01:58,842 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:01:58,886 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:01:58,886 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 462 ms
-""2026-05-14 00:01:58,936 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:01:58,954 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:01:58,998 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:01:59,022 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:01:59,094 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:01:59,102 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:01:59,288 WARN  [main] org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl:GenerationTarget encountered exception accepting command : Error executing DDL "
-    alter table users 
-       drop constraint FKp56c1712k691lhsyewcssf40f" via JDBC Statement
-"org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    alter table users 
-       drop constraint FKp56c1712k691lhsyewcssf40f" via JDBC Statement
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlString(SchemaDropperImpl.java:387)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlStrings(SchemaDropperImpl.java:371)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:341)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:235)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:156)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:128)
-	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:157)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:85)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:335)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:471)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1498)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:693)
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:510)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveInnerBean(BeanDefinitionValueResolver.java:374)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:134)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1707)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1452)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:213)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:176)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:171)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:156)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:262)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:236)
-	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:53)
-	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4936)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1328)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1318)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
-	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
-	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866)
-	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:795)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1328)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1318)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
-	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
-	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866)
-	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:249)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
-	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:428)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
-	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:922)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
-	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:486)
-	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123)
-	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104)
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:481)
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:184)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
-	at com.tpe.cinetime.CinetimeApplication.main(CinetimeApplication.java:10)
-Caused by: org.postgresql.util.PSQLException: ERROR: constraint "fkp56c1712k691lhsyewcssf40f" of relation "users" does not exist
-	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2675)
-	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2365)
-	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:355)
-	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:490)
-	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:408)
-	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:329)
-	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:315)
-	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:291)
-	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:286)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
-	... 116 common frames omitted
-"2026-05-14 00:01:59,298 WARN  [main] org.hibernate.engine.jdbc.spi.SqlExceptionHelper:SQL Warning Code: 0, SQLState: 00000
-""2026-05-14 00:01:59,298 WARN  [main] org.hibernate.engine.jdbc.spi.SqlExceptionHelper:drop cascades to constraint fkt7e7djp752sqn6w22i6ocqy6q on table user_role
-""2026-05-14 00:01:59,301 WARN  [main] org.hibernate.engine.jdbc.spi.SqlExceptionHelper:SQL Warning Code: 0, SQLState: 00000
-""2026-05-14 00:01:59,301 WARN  [main] org.hibernate.engine.jdbc.spi.SqlExceptionHelper:drop cascades to constraint fkj345gk1bovqvfame88rcx7yyx on table user_role
-""2026-05-14 00:01:59,339 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:01:59,343 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:01:59,604 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:01:59,676 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@688efeb2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@85f5f55, org.springframework.security.web.context.SecurityContextPersistenceFilter@776a3365, org.springframework.security.web.header.HeaderWriterFilter@5dbc4598, org.springframework.web.filter.CorsFilter@131c5bd, org.springframework.security.web.authentication.logout.LogoutFilter@4a1934e2, com.tpe.cinetime.security.AuthTokenFilter@683ed81b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e20c20b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1d167630, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@394331a8, org.springframework.security.web.session.SessionManagementFilter@42172065, org.springframework.security.web.access.ExceptionTranslationFilter@4509b7, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6c767288]
-""2026-05-14 00:01:59,756 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:01:59,759 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.483 seconds (JVM running for 1.613)
-""2026-05-14 00:02:28,958 INFO  [http-nio-8081-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:02:29,024 INFO  [http-nio-8081-exec-1] com.tpe.cinetime.service.AuthService:Inside register method
-""2026-05-14 00:05:10,255 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:05:10,257 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:05:10,258 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:07:01,007 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 63848 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:07:01,008 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:07:01,279 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:07:01,298 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 16 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:07:01,467 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:07:01,470 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:07:01,470 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:07:01,511 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:07:01,511 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 486 ms
-""2026-05-14 00:07:01,557 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:07:01,574 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:07:01,617 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:07:01,641 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:07:01,699 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:07:01,706 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:07:01,898 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:07:01,901 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:07:02,126 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:07:02,199 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@50a095cb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3f2afa8b, org.springframework.security.web.context.SecurityContextPersistenceFilter@3117ac8d, org.springframework.security.web.header.HeaderWriterFilter@24e7087a, org.springframework.web.filter.CorsFilter@6b2efcae, org.springframework.security.web.authentication.logout.LogoutFilter@6cf3b3d7, com.tpe.cinetime.security.AuthTokenFilter@37dec463, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7ea039b4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1aef7428, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@8aa1562, org.springframework.security.web.session.SessionManagementFilter@531299d3, org.springframework.security.web.access.ExceptionTranslationFilter@4a773f08, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@48697181]
-""2026-05-14 00:07:02,276 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:07:02,279 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.411 seconds (JVM running for 1.574)
-""2026-05-14 00:07:27,299 INFO  [http-nio-8081-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:07:27,361 INFO  [http-nio-8081-exec-2] com.tpe.cinetime.service.AuthService:Inside register method
-""2026-05-14 00:10:14,666 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:10:14,667 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:10:14,668 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:10:34,951 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Starting CinetimeApplicationTests using Java 17.0.18 on MacBurak-Mini.lan with PID 64306 (started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:10:34,952 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:10:35,173 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:10:35,193 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 17 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:10:35,367 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:10:35,383 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:10:35,428 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:10:35,461 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:10:35,533 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:10:35,539 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:10:35,720 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:10:35,724 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:10:35,969 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:10:36,074 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5f190cfe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@585672dd, org.springframework.security.web.context.SecurityContextPersistenceFilter@1dac0784, org.springframework.security.web.header.HeaderWriterFilter@5cc669d, org.springframework.web.filter.CorsFilter@49c947f7, org.springframework.security.web.authentication.logout.LogoutFilter@6167c42f, com.tpe.cinetime.security.AuthTokenFilter@77db231c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2336d3f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7f5ecada, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@47b494ce, org.springframework.security.web.session.SessionManagementFilter@1e5e3147, org.springframework.security.web.access.ExceptionTranslationFilter@1260c85e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3d42b756]
-""2026-05-14 00:10:36,217 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Started CinetimeApplicationTests in 1.366 seconds (JVM running for 1.648)
-""2026-05-14 00:10:36,292 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:10:36,293 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:10:36,294 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:15:02,628 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 65166 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:15:02,629 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:15:02,863 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:15:02,882 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 17 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:15:03,050 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:15:03,057 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:15:03,057 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:15:03,091 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:15:03,092 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 449 ms
-""2026-05-14 00:15:03,141 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:15:03,155 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:15:03,196 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:15:03,217 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:15:03,270 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:15:03,276 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:15:03,460 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:15:03,463 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:15:03,681 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:15:03,758 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5527dbb0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@483fe83a, org.springframework.security.web.context.SecurityContextPersistenceFilter@70df41f9, org.springframework.security.web.header.HeaderWriterFilter@5e3d84a, org.springframework.web.filter.CorsFilter@16120270, org.springframework.security.web.authentication.logout.LogoutFilter@7ea039b4, com.tpe.cinetime.security.AuthTokenFilter@5454be, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@46590dd0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6c737fdb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74babce8, org.springframework.security.web.session.SessionManagementFilter@4b9beefe, org.springframework.security.web.access.ExceptionTranslationFilter@42c55978, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@988c126]
-""2026-05-14 00:15:03,832 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:15:03,835 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.353 seconds (JVM running for 1.501)
-""2026-05-14 00:15:10,207 INFO  [http-nio-8081-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:15:10,301 ERROR [http-nio-8081-exec-8] com.tpe.cinetime.security.AuthenticationEntryPointJwt:Unauthorized error: Full authentication is required to access this resource
-""2026-05-14 00:15:10,382 ERROR [http-nio-8081-exec-10] com.tpe.cinetime.security.AuthenticationEntryPointJwt:Unauthorized error: Full authentication is required to access this resource
-""2026-05-14 00:15:10,410 INFO  [http-nio-8081-exec-9] org.springdoc.api.AbstractOpenApiResource:Init duration for springdoc-openapi is: 89 ms
-""2026-05-14 00:16:07,525 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:16:07,526 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:16:07,527 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:28:10,696 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 65304 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:28:10,697 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:28:10,947 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:28:10,967 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 18 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:28:11,131 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:28:11,133 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:28:11,134 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:28:11,173 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:28:11,173 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 462 ms
-""2026-05-14 00:28:11,223 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:28:11,238 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:28:11,283 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:28:11,305 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:28:11,359 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:28:11,365 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:28:11,551 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:28:11,553 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:28:11,769 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:28:11,847 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6b2efcae, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@8aa1562, org.springframework.security.web.context.SecurityContextPersistenceFilter@3117ac8d, org.springframework.security.web.header.HeaderWriterFilter@24e7087a, org.springframework.web.filter.CorsFilter@5c70c771, org.springframework.security.web.authentication.logout.LogoutFilter@6cf3b3d7, com.tpe.cinetime.security.AuthTokenFilter@37dec463, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7ea039b4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1aef7428, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@346690d6, org.springframework.security.web.session.SessionManagementFilter@531299d3, org.springframework.security.web.access.ExceptionTranslationFilter@4a773f08, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7263b0c4]
-""2026-05-14 00:28:11,929 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:28:11,933 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.367 seconds (JVM running for 1.504)
-""2026-05-14 00:28:18,788 INFO  [http-nio-8081-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:28:18,845 INFO  [http-nio-8081-exec-1] com.tpe.cinetime.service.AuthService:Inside register method
-""2026-05-14 00:28:31,583 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:28:31,584 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:28:31,585 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:29:14,157 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 65353 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:29:14,158 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:29:14,403 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:29:14,424 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 18 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:29:14,588 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:29:14,594 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:29:14,595 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:29:14,627 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:29:14,627 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 449 ms
-""2026-05-14 00:29:14,674 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:29:14,687 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:29:14,727 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:29:14,747 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:29:14,806 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:29:14,812 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:29:15,002 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:29:15,004 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:29:15,224 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:29:15,297 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@57ac2910, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3a663a45, org.springframework.security.web.context.SecurityContextPersistenceFilter@64a7ad02, org.springframework.security.web.header.HeaderWriterFilter@2728add3, org.springframework.web.filter.CorsFilter@e296794, org.springframework.security.web.authentication.logout.LogoutFilter@1aef7428, com.tpe.cinetime.security.AuthTokenFilter@37dec463, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6c737fdb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@66a93b25, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@988c126, org.springframework.security.web.session.SessionManagementFilter@4cddc036, org.springframework.security.web.access.ExceptionTranslationFilter@690e4b00, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2ecc4be7]
-""2026-05-14 00:29:15,370 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:29:15,373 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.352 seconds (JVM running for 1.472)
-""2026-05-14 00:29:20,043 INFO  [http-nio-8081-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:29:20,099 INFO  [http-nio-8081-exec-2] com.tpe.cinetime.service.AuthService:Inside register method
-""2026-05-14 00:29:26,753 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:29:26,755 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:29:26,756 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:31:12,019 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 65388 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:31:12,019 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:31:12,247 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:31:12,266 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 17 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:31:12,421 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:31:12,424 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:31:12,424 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:31:12,457 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:31:12,457 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 424 ms
-""2026-05-14 00:31:12,505 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:31:12,518 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:31:12,559 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:31:12,579 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:31:12,633 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:31:12,639 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:31:12,821 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:31:12,824 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:31:13,030 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:31:13,105 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1cb929a9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2ecc4be7, org.springframework.security.web.context.SecurityContextPersistenceFilter@56a72887, org.springframework.security.web.header.HeaderWriterFilter@1e36baca, org.springframework.web.filter.CorsFilter@3355d9ba, org.springframework.security.web.authentication.logout.LogoutFilter@531299d3, com.tpe.cinetime.security.AuthTokenFilter@796fe2b5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b9beefe, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4cddc036, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5357de0e, org.springframework.security.web.session.SessionManagementFilter@5e8698c0, org.springframework.security.web.access.ExceptionTranslationFilter@79349b61, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5f877009]
-""2026-05-14 00:31:13,178 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:31:13,182 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.291 seconds (JVM running for 1.438)
-""2026-05-14 00:32:59,243 INFO  [http-nio-8081-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:41:21,274 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:41:21,276 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:41:21,279 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2026-05-14 00:41:27,616 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mini.lan with PID 65553 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
-""2026-05-14 00:41:27,617 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
-""2026-05-14 00:41:27,886 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2026-05-14 00:41:27,908 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 19 ms. Found 2 JPA repository interfaces.
-""2026-05-14 00:41:28,089 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
-""2026-05-14 00:41:28,093 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2026-05-14 00:41:28,093 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
-""2026-05-14 00:41:28,138 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2026-05-14 00:41:28,139 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 505 ms
-""2026-05-14 00:41:28,183 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2026-05-14 00:41:28,200 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
-""2026-05-14 00:41:28,242 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-""2026-05-14 00:41:28,270 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2026-05-14 00:41:28,342 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2026-05-14 00:41:28,349 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-""2026-05-14 00:41:28,634 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-""2026-05-14 00:41:28,638 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:41:28,866 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-""2026-05-14 00:41:28,935 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7282f7b1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7263b0c4, org.springframework.security.web.context.SecurityContextPersistenceFilter@46590dd0, org.springframework.security.web.header.HeaderWriterFilter@4fce3ed7, org.springframework.web.filter.CorsFilter@361c4981, org.springframework.security.web.authentication.logout.LogoutFilter@1610c03c, com.tpe.cinetime.security.AuthTokenFilter@37dec463, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@66a93b25, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3f3f554f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@35fac3ba, org.springframework.security.web.session.SessionManagementFilter@23d12a3a, org.springframework.security.web.access.ExceptionTranslationFilter@5e3d84a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1fab0394]
-""2026-05-14 00:41:29,014 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
-""2026-05-14 00:41:29,017 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.541 seconds (JVM running for 1.671)
-""2026-05-14 00:41:39,986 INFO  [http-nio-8081-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2026-05-14 00:41:40,049 INFO  [http-nio-8081-exec-2] com.tpe.cinetime.service.AuthService:Inside register method
-""2026-05-14 00:41:44,146 INFO  [http-nio-8081-exec-3] com.tpe.cinetime.service.AuthService:Inside register method
-""2026-05-14 00:42:17,380 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2026-05-14 00:42:17,381 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2026-05-14 00:42:17,382 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+"2026-05-16 11:10:11,636 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mac-mini.local with PID 2465 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
+""2026-05-16 11:10:11,639 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
+""2026-05-16 11:10:11,871 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2026-05-16 11:10:11,890 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 14 ms. Found 2 JPA repository interfaces.
+""2026-05-16 11:10:12,056 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
+""2026-05-16 11:10:12,059 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
+""2026-05-16 11:10:12,059 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
+""2026-05-16 11:10:12,096 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
+""2026-05-16 11:10:12,096 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 441 ms
+""2026-05-16 11:10:12,150 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2026-05-16 11:10:12,169 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
+""2026-05-16 11:10:12,211 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2026-05-16 11:10:12,234 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2026-05-16 11:10:12,301 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2026-05-16 11:10:12,308 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+""2026-05-16 11:10:12,533 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2026-05-16 11:10:12,536 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:10:12,771 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""2026-05-16 11:10:12,849 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3e170abe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@712e4b18, org.springframework.security.web.context.SecurityContextPersistenceFilter@79636080, org.springframework.security.web.header.HeaderWriterFilter@2e20c20b, org.springframework.web.filter.CorsFilter@af96ac9, org.springframework.security.web.authentication.logout.LogoutFilter@2c8f65da, com.tpe.cinetime.security.AuthTokenFilter@58e5fbe5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@214e3185, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@75345e47, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27d0376f, org.springframework.security.web.session.SessionManagementFilter@3fa57aa8, org.springframework.security.web.access.ExceptionTranslationFilter@776a3365, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@49b180c8]
+""2026-05-16 11:10:12,925 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
+""2026-05-16 11:10:12,928 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.425 seconds (JVM running for 1.583)
+""2026-05-16 11:10:13,032 INFO  [main] com.tpe.cinetime.config.AdminInitializer:Admin user created: admin@cinetime.com
+""2026-05-16 11:10:17,971 INFO  [http-nio-8081-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
+""2026-05-16 11:10:18,033 INFO  [http-nio-8081-exec-1] com.tpe.cinetime.service.AuthService:Inside register method
+""2026-05-16 11:10:21,481 INFO  [http-nio-8081-exec-3] com.tpe.cinetime.service.AuthService:Inside register method
+""2026-05-16 11:10:36,982 INFO  [http-nio-8081-exec-5] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:10:44,426 INFO  [http-nio-8081-exec-7] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:10:45,653 INFO  [http-nio-8081-exec-9] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:10:53,425 INFO  [http-nio-8081-exec-2] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:11:02,232 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:11:02,233 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2026-05-16 11:11:02,234 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+""2026-05-16 11:11:17,648 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mac-mini.local with PID 2491 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
+""2026-05-16 11:11:17,649 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
+""2026-05-16 11:11:17,893 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2026-05-16 11:11:17,912 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 16 ms. Found 2 JPA repository interfaces.
+""2026-05-16 11:11:18,074 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
+""2026-05-16 11:11:18,077 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
+""2026-05-16 11:11:18,077 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
+""2026-05-16 11:11:18,109 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
+""2026-05-16 11:11:18,109 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 444 ms
+""2026-05-16 11:11:18,157 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2026-05-16 11:11:18,171 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
+""2026-05-16 11:11:18,209 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2026-05-16 11:11:18,229 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2026-05-16 11:11:18,277 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2026-05-16 11:11:18,283 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+""2026-05-16 11:11:18,471 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2026-05-16 11:11:18,476 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:11:18,704 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""2026-05-16 11:11:18,783 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c767288, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@510e6b93, org.springframework.security.web.context.SecurityContextPersistenceFilter@b2e1df3, org.springframework.security.web.header.HeaderWriterFilter@7865cc83, org.springframework.web.filter.CorsFilter@129e45eb, org.springframework.security.web.authentication.logout.LogoutFilter@1eee9b78, com.tpe.cinetime.security.AuthTokenFilter@3f033664, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cf3b3d7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e785b28, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@15c3849f, org.springframework.security.web.session.SessionManagementFilter@12a9e864, org.springframework.security.web.access.ExceptionTranslationFilter@2079fcfc, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2665a2e7]
+""2026-05-16 11:11:18,859 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
+""2026-05-16 11:11:18,862 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.349 seconds (JVM running for 1.471)
+""2026-05-16 11:11:18,963 INFO  [main] com.tpe.cinetime.config.AdminInitializer:Admin user created: admin@cinetime.com
+""2026-05-16 11:11:26,740 INFO  [http-nio-8081-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
+""2026-05-16 11:11:26,795 INFO  [http-nio-8081-exec-1] com.tpe.cinetime.service.AuthService:Inside register method
+""2026-05-16 11:11:28,433 INFO  [http-nio-8081-exec-3] com.tpe.cinetime.service.AuthService:Inside register method
+""2026-05-16 11:11:30,589 INFO  [http-nio-8081-exec-5] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:11:31,914 INFO  [http-nio-8081-exec-8] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:11:35,245 INFO  [http-nio-8081-exec-9] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:15:53,910 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:15:53,912 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2026-05-16 11:15:53,912 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+""2026-05-16 11:27:04,799 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Starting CinetimeApplicationTests using Java 17.0.18 on MacBurak-Mac-mini.local with PID 3035 (started by burak in /Users/burak/Desktop/developer/cinetime)
+""2026-05-16 11:27:04,800 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:No active profile set, falling back to 1 default profile: "default"
+""2026-05-16 11:27:05,027 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2026-05-16 11:27:05,045 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 15 ms. Found 2 JPA repository interfaces.
+""2026-05-16 11:27:05,213 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2026-05-16 11:27:05,234 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
+""2026-05-16 11:27:05,282 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2026-05-16 11:27:05,322 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2026-05-16 11:27:05,391 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2026-05-16 11:27:05,398 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+""2026-05-16 11:27:05,610 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2026-05-16 11:27:05,614 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:27:05,851 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""2026-05-16 11:27:05,961 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@56d3af4d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43b7bd5a, org.springframework.security.web.context.SecurityContextPersistenceFilter@534d0cfa, org.springframework.security.web.header.HeaderWriterFilter@69cb134, org.springframework.web.filter.CorsFilter@37fd496a, org.springframework.security.web.authentication.logout.LogoutFilter@50a1af86, com.tpe.cinetime.security.AuthTokenFilter@62e99458, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1d33e72e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@26a202ae, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6c4e486e, org.springframework.security.web.session.SessionManagementFilter@3acc65f0, org.springframework.security.web.access.ExceptionTranslationFilter@71d78cac, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6f6c6c70]
+""2026-05-16 11:27:06,102 INFO  [main] com.tpe.cinetime.CinetimeApplicationTests:Started CinetimeApplicationTests in 1.39 seconds (JVM running for 1.677)
+""2026-05-16 11:27:06,203 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:27:06,204 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2026-05-16 11:27:06,206 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+""2026-05-16 11:30:52,361 INFO  [main] com.tpe.cinetime.CinetimeApplication:Starting CinetimeApplication using Java 17.0.18 on MacBurak-Mac-mini.local with PID 3544 (/Users/burak/Desktop/developer/cinetime/target/classes started by burak in /Users/burak/Desktop/developer/cinetime)
+""2026-05-16 11:30:52,362 INFO  [main] com.tpe.cinetime.CinetimeApplication:No active profile set, falling back to 1 default profile: "default"
+""2026-05-16 11:30:52,601 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2026-05-16 11:30:52,621 INFO  [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 17 ms. Found 2 JPA repository interfaces.
+""2026-05-16 11:30:52,780 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8081 (http)
+""2026-05-16 11:30:52,787 INFO  [main] org.apache.catalina.core.StandardService:Starting service [Tomcat]
+""2026-05-16 11:30:52,787 INFO  [main] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.78]
+""2026-05-16 11:30:52,820 INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
+""2026-05-16 11:30:52,820 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 443 ms
+""2026-05-16 11:30:52,870 INFO  [main] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2026-05-16 11:30:52,887 INFO  [main] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.15.Final
+""2026-05-16 11:30:52,933 INFO  [main] org.hibernate.annotations.common.Version:HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+""2026-05-16 11:30:52,959 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2026-05-16 11:30:53,012 INFO  [main] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2026-05-16 11:30:53,018 INFO  [main] org.hibernate.dialect.Dialect:HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+""2026-05-16 11:30:53,232 INFO  [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""2026-05-16 11:30:53,235 INFO  [main] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:30:53,464 WARN  [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration:spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""2026-05-16 11:30:53,530 INFO  [main] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@155318b5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1add90e0, org.springframework.security.web.context.SecurityContextPersistenceFilter@1f0f92f5, org.springframework.security.web.header.HeaderWriterFilter@1c22642d, org.springframework.web.filter.CorsFilter@7bf94e91, org.springframework.security.web.authentication.logout.LogoutFilter@353422fd, com.tpe.cinetime.security.AuthTokenFilter@6032622, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2346f77a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5bcfdaf3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3fdbb7ee, org.springframework.security.web.session.SessionManagementFilter@61d150af, org.springframework.security.web.access.ExceptionTranslationFilter@4a49919c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5f8d4b51]
+""2026-05-16 11:30:53,605 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8081 (http) with context path ''
+""2026-05-16 11:30:53,608 INFO  [main] com.tpe.cinetime.CinetimeApplication:Started CinetimeApplication in 1.374 seconds (JVM running for 1.535)
+""2026-05-16 11:31:32,058 INFO  [http-nio-8081-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
+""2026-05-16 11:31:32,118 INFO  [http-nio-8081-exec-1] com.tpe.cinetime.service.AuthService:Inside register method
+""2026-05-16 11:34:33,064 INFO  [http-nio-8081-exec-3] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:35:21,917 INFO  [http-nio-8081-exec-6] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:36:20,642 INFO  [http-nio-8081-exec-3] org.springdoc.api.AbstractOpenApiResource:Init duration for springdoc-openapi is: 75 ms
+""2026-05-16 11:37:53,039 INFO  [http-nio-8081-exec-10] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:38:07,676 INFO  [http-nio-8081-exec-3] com.tpe.cinetime.service.AuthService:Inside login method
+""2026-05-16 11:39:00,291 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2026-05-16 11:39:00,292 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2026-05-16 11:39:00,292 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
 "

@@ -1,9 +1,12 @@
 package com.tpe.cinetime.payload.mapper;
 
 import com.tpe.cinetime.entity.User;
-import com.tpe.cinetime.payload.request.RegisterRequestDTO;
-import com.tpe.cinetime.payload.response.UserResponseDTO;
+import com.tpe.cinetime.payload.request.authentication.RegisterRequestDTO;
+import com.tpe.cinetime.payload.response.authentication.LoginResponseDTO;
+import com.tpe.cinetime.payload.response.user.UserResponseDTO;
+import com.tpe.cinetime.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +42,23 @@ public class UserMapper {
                 .gender(user.getGender().name())
                 .role(user.getRole().getRoleName().name())
                 .build();
+    }
+
+    public LoginResponseDTO mapUserDetailsImplToLoginResponseDTO(UserDetailsImpl userDetailsImpl, String token){
+
+        String role = userDetailsImpl.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse(null);
+
+        return LoginResponseDTO.builder()
+                .id(userDetailsImpl.getId())
+                .email(userDetailsImpl.getUsername())
+                .role(role)
+                .token(token)
+                .tokenType("Bearer")
+                .build();
+
     }
 }

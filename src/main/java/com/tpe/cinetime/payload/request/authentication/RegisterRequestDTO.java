@@ -1,6 +1,6 @@
-package com.tpe.cinetime.payload.request;
+package com.tpe.cinetime.payload.request.authentication;
 
-import com.tpe.cinetime.enums.Gender;
+import com.tpe.cinetime.payload.request.BaseUserRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -20,10 +19,11 @@ public class RegisterRequestDTO extends BaseUserRequestDTO {
 
     @NotBlank(message = "Password is required")
     @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_#])[A-Za-z\\d@$!%*?&_#]{8,}$",
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&_#]{8,}$",
             message = "Password must be at least 8 characters and contain at least one uppercase letter, " +
-                    "one lowercase letter, one digit, and one special character (@$!%*?&_#)"
+                    "one lowercase letter, and one digit"
     )
     private String password;
 
 }
+

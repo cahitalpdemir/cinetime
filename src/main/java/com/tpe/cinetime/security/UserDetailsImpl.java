@@ -42,7 +42,7 @@ public class UserDetailsImpl implements UserDetails {
 
         //Kullanicin tek rolünü SpringSecurity'nin anlayacagi GrantedAuthority'e ceviriyoruz
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        String role = user.getRole().getRoleName().name();
+        String role = "ROLE_" + user.getRole().getRoleName().name();
         grantedAuthorities.add(new SimpleGrantedAuthority(role));
 
         UserDetailsImpl userDetails = new UserDetailsImpl();

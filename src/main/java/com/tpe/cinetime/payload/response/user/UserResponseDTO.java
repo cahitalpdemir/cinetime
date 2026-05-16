@@ -1,4 +1,4 @@
-package com.tpe.cinetime.payload.response;
+package com.tpe.cinetime.payload.response.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,9 +15,10 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder//Kalıtımda @Builder çalışmaz, parent field'larını da builder'a
 //dahil etmek için @SuperBuilder kullanılmalı.
-public class UserResponseDTO extends BaseUserResponseDTO{
+public class UserResponseDTO extends BaseUserResponseDTO {
 
-
+    private String name;
+    private String surname;
     private String phoneNumber;
 
     @JsonFormat(pattern = "dd/MM/yyyy")

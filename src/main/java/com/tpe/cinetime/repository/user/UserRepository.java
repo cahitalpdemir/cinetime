@@ -1,4 +1,4 @@
-package com.tpe.cinetime.repository;
+package com.tpe.cinetime.repository.user;
 
 import com.tpe.cinetime.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

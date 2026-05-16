@@ -1,7 +1,7 @@
 package com.tpe.cinetime.security;
 
 import com.tpe.cinetime.entity.User;
-import com.tpe.cinetime.repository.UserRepository;
+import com.tpe.cinetime.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

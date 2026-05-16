@@ -27,7 +27,6 @@ public class WebSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final AuthTokenFilter authTokenFilter;
-    private final JwtUtils jwtUtils;
 
 
     //Password encoder -> BCrypt kullaniyorum
@@ -90,13 +89,18 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
+                //Role bazli endpoint kurallari
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/customer/**").hasRole("CUSTOMER")
+                //Yukarıdaki kurallar dışında herhangi bir istek varsa login olmasi gerek
                 .anyRequest().authenticated();
 
-        //H2 consel icin (gelistirme ortami)
+        //H2 console icin (gelistirme ortami)
         httpSecurity.headers().frameOptions().sameOrigin();
         httpSecurity.authenticationProvider(daoAuthenticationProvider());
 
         //Jwt filter'i, Spring'in kendi login filter'inden önce ekleme
+        //Böylece her request'de önce Authorization header kontrolü yapilir
         httpSecurity.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();

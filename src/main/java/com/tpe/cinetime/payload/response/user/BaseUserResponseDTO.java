@@ -1,15 +1,10 @@
-package com.tpe.cinetime.payload.response;
+package com.tpe.cinetime.payload.response.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tpe.cinetime.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.Date;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,8 +15,6 @@ import java.util.Set;
 public class BaseUserResponseDTO {
 
     private Long id;
-    private String name;
-    private String surname;
     private String email;
     private String role;
 }
