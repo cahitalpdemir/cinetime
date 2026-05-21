@@ -30,15 +30,21 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        // /auth/refresh-token -> bu endpoint icin auth token gerekmez
+        if (request.getServletPath().equals("/auth/refresh-token")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try{
             //1. Header'dan token'i cikarma
             String jwt = extractJwtFromRequest(request);
 
             //2. Token var mi ve gecerli mi?
-            if (jwt != null && jwtUtils.validateJwt(jwt)){
+            if (jwt != null && jwtUtils.validateAccessToken(jwt)){
 
                 //3. Tokendan emaili al
-                String email = jwtUtils.getEmailFromJwt(jwt);
+                String email = jwtUtils.getEmailFromAccessToken(jwt);
 
                 //4. DB'den kullaniciyi yükleme
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);

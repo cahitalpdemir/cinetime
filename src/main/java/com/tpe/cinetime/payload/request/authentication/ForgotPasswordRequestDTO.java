@@ -9,12 +9,9 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class LoginRequestDTO {
+public class ForgotPasswordRequestDTO {
 
     @NotBlank(message = ValidationMessages.EMAIL_NOT_BLANK)
     @Email(message = ValidationMessages.EMAIL_NOT_VALID)
     private String email;
-
-    @NotBlank(message = ValidationMessages.PASSWORD_NOT_BLANK)
-    private String password;
 }

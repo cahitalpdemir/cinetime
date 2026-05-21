@@ -1,7 +1,7 @@
 package com.tpe.cinetime.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tpe.cinetime.payload.response.ResponseMessage;
+import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
