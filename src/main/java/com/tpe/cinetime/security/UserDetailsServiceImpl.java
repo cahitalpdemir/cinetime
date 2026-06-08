@@ -1,5 +1,6 @@
 package com.tpe.cinetime.security;
 
+import com.tpe.cinetime.constants.messages.ErrorMessages;
 import com.tpe.cinetime.entity.User;
 import com.tpe.cinetime.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -24,9 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user = userRepository.findByEmail(email)
                 //Optional boşsa direkt exception fırlat
-                .orElseThrow(() -> new UsernameNotFoundException(
-                   "User not found with email: " + email
-                ));
+                .orElseThrow(() -> new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND));
 
         //Tüm dönüşüm işlemini build() ile yapiliyor
         return UserDetailsImpl.build(user);

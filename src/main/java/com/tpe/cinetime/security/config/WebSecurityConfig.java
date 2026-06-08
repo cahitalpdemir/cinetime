@@ -1,8 +1,11 @@
-package com.tpe.cinetime.security;
+package com.tpe.cinetime.security.config;
 
+import com.tpe.cinetime.security.AuthTokenFilter;
+import com.tpe.cinetime.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -90,8 +93,11 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
                 //Role bazli endpoint kurallari
+                .antMatchers("/admin/users/**").hasAnyRole("ADMIN", "MANAGER")
+                .antMatchers("/admin/user/**").hasAnyRole("ADMIN", "MANAGER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/user/me").hasRole("CUSTOMER")
                 //Yukarıdaki kurallar dışında herhangi bir istek varsa login olmasi gerek
                 .anyRequest().authenticated();
 
@@ -107,11 +113,26 @@ public class WebSecurityConfig {
     }
 
     private static final String[] AUTH_WHITELIST = {
-            // Auth
+            //Auth
             "/auth/login",
             "/auth/register",
+            "/auth/refresh-token",
+            "/auth/forgot-password",
+            "/auth/reset-password",
 
-            // Springdoc / Swagger UI
+
+            //Public Movie endpoints
+            "/api/movies/**",
+
+            //Public Cinema endpoints
+            "/cinemas",
+            "/cinemas/**",
+
+            //Public Showtime endpoints
+            "/showtimes",
+            "/showtimes/**",
+
+            //Springdoc / Swagger UI
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
@@ -119,7 +140,7 @@ public class WebSecurityConfig {
             "/swagger-resources/**",
             "/webjars/**",
 
-            // Static
+            //Static
             "/",
             "/index.html",
             "/css/**",

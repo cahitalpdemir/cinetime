@@ -8,6 +8,7 @@ import com.tpe.cinetime.repository.user.RoleRepository;
 import com.tpe.cinetime.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,14 @@ public class AdminInitializer implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${app.admin.email}")
+    String adminEmail;
+
+    @Value("${app.admin.password}")
+    String adminPassword;
 
     @Override
     public void run(String... args) throws Exception {
-
-        String adminEmail = "admin@cinetime.com";
-        String adminPassword = "Admin123";
 
         Role adminRole = roleRepository.findByRoleName(RoleName.ADMIN)
                 .orElseGet(() -> roleRepository.save(

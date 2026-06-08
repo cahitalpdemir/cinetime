@@ -1,18 +1,15 @@
 package com.tpe.cinetime.payload.response.authentication;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.tpe.cinetime.payload.response.user.BaseUserResponseDTO;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class LoginResponseDTO extends BaseUserResponseDTO {
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class RefreshTokenResponseDTO {
 
     private String accessToken;
 

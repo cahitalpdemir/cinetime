@@ -3,6 +3,7 @@ package com.tpe.cinetime.payload.mapper;
 import com.tpe.cinetime.entity.User;
 import com.tpe.cinetime.payload.request.authentication.RegisterRequestDTO;
 import com.tpe.cinetime.payload.response.authentication.LoginResponseDTO;
+import com.tpe.cinetime.payload.response.authentication.RefreshTokenResponseDTO;
 import com.tpe.cinetime.payload.response.user.UserResponseDTO;
 import com.tpe.cinetime.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,9 @@ public class UserMapper {
                 .build();
     }
 
-    public LoginResponseDTO mapUserDetailsImplToLoginResponseDTO(UserDetailsImpl userDetailsImpl, String token){
+    public LoginResponseDTO mapUserDetailsImplToLoginResponseDTO(UserDetailsImpl userDetailsImpl,
+                                                                 String accessToken,
+                                                                 String refreshToken){
 
         String role = userDetailsImpl.getAuthorities()
                 .stream()
@@ -56,9 +59,23 @@ public class UserMapper {
                 .id(userDetailsImpl.getId())
                 .email(userDetailsImpl.getUsername())
                 .role(role)
-                .token(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .tokenType("Bearer")
                 .build();
 
     }
+
+    public RefreshTokenResponseDTO mapToRefreshTokenResponseDTO(
+            String accessToken,
+            String refreshToken){
+
+        return RefreshTokenResponseDTO.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .tokenType("Bearer")
+                .build();
+    }
+
+
 }

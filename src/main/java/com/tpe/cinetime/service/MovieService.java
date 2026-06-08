@@ -2,7 +2,7 @@ package com.tpe.cinetime.service;
 
 
 import com.tpe.cinetime.entity.Movie;
-import com.tpe.cinetime.exception.ResourceNotFoundException;
+import com.tpe.cinetime.exception.NotFoundException;
 import com.tpe.cinetime.payload.request.MovieRequest;
 import com.tpe.cinetime.payload.response.MovieResponse;
 import com.tpe.cinetime.repository.MovieRepository;
@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 @Service
 public class MovieService {
@@ -30,7 +33,7 @@ public class MovieService {
 
     public MovieResponse getMovieBySlug(String slug) {
         Movie movie = movieRepository.findBySlug(slug)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with slug: " + slug));
+                .orElseThrow(() -> new NotFoundException("Movie not found with slug: " + slug));
         return mapToResponse(movie);
     }
 
@@ -52,7 +55,7 @@ public class MovieService {
 
     public MovieResponse getMovieById(Long id) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Movie not found with id: " + id));
         return mapToResponse(movie);
     }
 
@@ -83,7 +86,7 @@ public class MovieService {
     @Transactional
     public MovieResponse updateMovie(Long id, MovieRequest request) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Movie not found with id: " + id));
 
         movie.setTitle(request.getTitle());
         movie.setSlug(generateSlug(request.getTitle()));
@@ -104,13 +107,14 @@ public class MovieService {
     @Transactional
     public MovieResponse deleteMovie(Long id) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Movie not found with id: " + id));
+        MovieResponse response = mapToResponse(movie);
         movieRepository.delete(movie);
-        return mapToResponse(movie);
+        return response;
     }
 
     private String generateSlug(String title) {
-        return title.toLowerCase()
+        return title.toLowerCase(Locale.ENGLISH)
                 .replaceAll("[^a-z0-9\\s-]", "")
                 .replaceAll("\\s+", "-")
                 .replaceAll("-+", "-")
@@ -127,8 +131,8 @@ public class MovieService {
                 .duration(movie.getDuration())
                 .rating(movie.getRating())
                 .director(movie.getDirector())
-                .cast(movie.getCast())
-                .formats(movie.getFormats())
+                .cast(movie.getCast() != null ? new ArrayList<>(movie.getCast()) : null)
+                .formats(movie.getFormats() != null ? new ArrayList<>(movie.getFormats()) : null)
                 .genre(movie.getGenre())
 //                .posterId(movie.getPoster() != null ? movie.getPoster().getId() : null)
                 .status(movie.getStatus())

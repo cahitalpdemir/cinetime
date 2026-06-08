@@ -1,4 +1,4 @@
-package com.tpe.cinetime.payload.response;
+package com.tpe.cinetime.payload.responseMessage;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

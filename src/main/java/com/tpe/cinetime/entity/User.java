@@ -86,10 +86,11 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @Column(nullable = true)
-    private String resetPasswordCode;
+    @Column(nullable = true, name = "reset_password_token")
+    private String resetPasswordToken;
 
-
+    @Column(nullable = true, name = "reset_password_token_expire_date")
+    private LocalDateTime resetPasswordTokenExpireDate;
 
 
 
