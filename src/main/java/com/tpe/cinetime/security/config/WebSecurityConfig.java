@@ -122,8 +122,7 @@ public class WebSecurityConfig {
 
 
             //Public Movie endpoints
-            "/movies",
-            "/movies/**",
+            "/api/movies/**",
 
             //Public Cinema endpoints
             "/cinemas",

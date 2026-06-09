@@ -4,21 +4,28 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootApplication
 public class CinetimeApplication {
 
 	public static void main(String[] args) {
 
-		// .env dosyasını okuma
 		Dotenv dotenv = Dotenv.configure()
-				.ignoreIfMissing() // .env dosyası yoksa hata vermez
+				.directory(System.getProperty("user.dir"))
+				.ignoreIfMissing()
 				.load();
 
-		// .env dosyasındaki değerleri sistem özelliklerine ekleme
-		dotenv.entries().forEach(entry ->
-				System.setProperty(entry.getKey(), entry.getValue()));
+		Map<String, Object> envProperties = new HashMap<>();
+		dotenv.entries().forEach(entry -> {
+			envProperties.put(entry.getKey(), entry.getValue());
+			System.setProperty(entry.getKey(), entry.getValue());
+		});
 
-		SpringApplication.run(CinetimeApplication.class, args);
+		SpringApplication app = new SpringApplication(CinetimeApplication.class);
+		app.setDefaultProperties(envProperties);
+		app.run(args);
 	}
 
 }
