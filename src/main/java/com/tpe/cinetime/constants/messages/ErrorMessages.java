@@ -29,6 +29,13 @@ public final class ErrorMessages {
     public static final String CANNOT_DELETE_BUILT_IN_USER = "Built-in users can not be deleted";
     public static final String MANAGER_CANNOT_DELETE = "Managers can delete only customer users";
 
+    //Cinema
+    public static final String CINEMA_NOT_FOUND = "Cinema not found. Cinema id: %d";
+    public static final String CINEMA_PHONE_ALREADY_EXISTS = "A cinema with this phone number already exists";
+
+    //Hall
+    public static final String CINEMA_NOT_FOUND_FOR_HALL = "Cinema not found for hall. Cinema id: %d";
+
     //Email
     public static final String EMAIL_SEND_FAILED = "Password reset email could not be sent to: ";
 
