@@ -23,4 +23,12 @@ public final class SuccessMessages {
 
     //Email
 
+    //Cinema
+    public static final String CINEMA_SAVED_SUCCESSFULLY = "Cinema saved successfully";
+    public static final String CINEMA_FETCHED_SUCCESSFULLY = "Cinema fetched successfully";
+    public static final String CINEMAS_FETCHED_SUCCESSFULLY = "Cinemas fetched successfully";
+
+    //Hall
+    public static final String HALL_SAVED_SUCCESSFULLY = "Hall saved successfully";
+
 }
