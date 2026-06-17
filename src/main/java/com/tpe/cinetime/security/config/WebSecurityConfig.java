@@ -42,8 +42,8 @@ public class WebSecurityConfig {
     //DB'den kullaniciyi cekip password dogrulayan provider
     /*
       Login sirasinda AuthenticationManager,
-      kullaniciyi UserDetailsServiceImpl üzerinden bulur
-      ve passwordEncoder ile sifre kontrolü yapar.
+      kullaniciyi UserDetailsServiceImpl Ã¼zerinden bulur
+      ve passwordEncoder ile sifre kontrolÃ¼ yapar.
     */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
@@ -92,21 +92,27 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
+                // Public movie read endpoints
+                .antMatchers(HttpMethod.GET, "/api/movies/**").permitAll()
+                // Movie write endpoints require admin or manager role
+                .antMatchers(HttpMethod.POST, "/api/movies/**").hasAnyRole("ADMIN", "MANAGER")
+                .antMatchers(HttpMethod.PUT, "/api/movies/**").hasAnyRole("ADMIN", "MANAGER")
+                .antMatchers(HttpMethod.DELETE, "/api/movies/**").hasAnyRole("ADMIN", "MANAGER")
                 //Role bazli endpoint kurallari
                 .antMatchers("/admin/users/**").hasAnyRole("ADMIN", "MANAGER")
                 .antMatchers("/admin/user/**").hasAnyRole("ADMIN", "MANAGER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.DELETE, "/user/me").hasRole("CUSTOMER")
-                //Yukarıdaki kurallar dışında herhangi bir istek varsa login olmasi gerek
+                //YukarÄ±daki kurallar dÄ±ÅŸÄ±nda herhangi bir istek varsa login olmasi gerek
                 .anyRequest().authenticated();
 
         //H2 console icin (gelistirme ortami)
         httpSecurity.headers().frameOptions().sameOrigin();
         httpSecurity.authenticationProvider(daoAuthenticationProvider());
 
-        //Jwt filter'i, Spring'in kendi login filter'inden önce ekleme
-        //Böylece her request'de önce Authorization header kontrolü yapilir
+        //Jwt filter'i, Spring'in kendi login filter'inden Ã¶nce ekleme
+        //BÃ¶ylece her request'de Ã¶nce Authorization header kontrolÃ¼ yapilir
         httpSecurity.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
@@ -119,11 +125,6 @@ public class WebSecurityConfig {
             "/auth/refresh-token",
             "/auth/forgot-password",
             "/auth/reset-password",
-
-
-            //Public Movie endpoints
-            "/api/movies/**",
-
             //Public Cinema endpoints
             "/cinemas",
             "/cinemas/**",
@@ -150,3 +151,5 @@ public class WebSecurityConfig {
 
 
 }
+
+

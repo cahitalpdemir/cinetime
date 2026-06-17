@@ -4,6 +4,7 @@ import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -70,6 +71,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+
+    // Handles forbidden access errors for authenticated users without required role
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ResponseMessage<?>> handleAccessDeniedException(AccessDeniedException exception){
+
+        ResponseMessage<?> response = ResponseMessage.builder()
+                .httpStatus(HttpStatus.FORBIDDEN)
+                .message("Access is denied")
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
     //Handles all other unexpected exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseMessage<?>> handleAllUnknownExceptions(Exception exception){
@@ -85,3 +98,4 @@ public class GlobalExceptionHandler {
 
 
 }
+
