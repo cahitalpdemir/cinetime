@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 
 import com.tpe.cinetime.enums.SeatType;
@@ -19,8 +20,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity 
-@Table(name="seats")
+@Entity
+@Table(
+   name="seats",
+   uniqueConstraints = {
+      @UniqueConstraint(
+         name = "uk_seat_hall_row_number",
+         columnNames = {"hall_id", "rowLetter", "seatNumber"}
+      )
+   }
+)
 @Getter
 @Setter
 @AllArgsConstructor

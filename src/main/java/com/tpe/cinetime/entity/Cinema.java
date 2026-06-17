@@ -29,13 +29,13 @@ public class Cinema {
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long id;
 
-   @Column(nullable=false, length=25)
+   @Column(nullable=false, length=100)
    private String name;
 
-   @Column(nullable=false, length=20)
+   @Column(nullable=false, length=50)
    private String city;
 
-   @Column(nullable=false, length=20)
+   @Column(nullable=false, length=50)
    private String district;
 
    @Column(nullable=false, length=255)
