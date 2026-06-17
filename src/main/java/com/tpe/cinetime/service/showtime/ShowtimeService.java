@@ -105,8 +105,7 @@ public class ShowtimeService {
 
     //returns active showtimes filtered by optional movieId, hallId and date
     public ResponseMessage<List<ShowtimeResponse>> getShowtimes(Long movieId, Long hallId, LocalDate date) {
-        List<ShowtimeResponse> responses = showtimeRepository
-                .findByFilters(movieId, hallId, date)
+        List<ShowtimeResponse> responses = findActiveShowtimes(movieId, hallId, date)
                 .stream()
                 .map(showtimeMapper::toResponse)
                 .collect(Collectors.toList());
@@ -116,6 +115,33 @@ public class ShowtimeService {
                 .message(SuccessMessages.SHOWTIMES_FETCHED_SUCCESSFULLY)
                 .httpStatus(HttpStatus.OK)
                 .build();
+    }
+
+    private List<Showtime> findActiveShowtimes(Long movieId, Long hallId, LocalDate date) {
+        ShowtimeStatus active = ShowtimeStatus.ACTIVE;
+
+        if (movieId != null && hallId != null && date != null) {
+            return showtimeRepository.findByMovieIdAndHallIdAndDateAndStatus(movieId, hallId, date, active);
+        }
+        if (movieId != null && hallId != null) {
+            return showtimeRepository.findByMovieIdAndHallIdAndStatus(movieId, hallId, active);
+        }
+        if (movieId != null && date != null) {
+            return showtimeRepository.findByMovieIdAndDateAndStatus(movieId, date, active);
+        }
+        if (hallId != null && date != null) {
+            return showtimeRepository.findByHallIdAndDateAndStatus(hallId, date, active);
+        }
+        if (movieId != null) {
+            return showtimeRepository.findByMovieIdAndStatus(movieId, active);
+        }
+        if (hallId != null) {
+            return showtimeRepository.findByHallIdAndStatus(hallId, active);
+        }
+        if (date != null) {
+            return showtimeRepository.findByDateAndStatus(date, active);
+        }
+        return showtimeRepository.findByStatus(active);
     }
 
     //returns all seats for a showtime with booked/available status

@@ -14,16 +14,26 @@ import java.util.List;
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
 
-    // filter by optional params/null values are ignored
-    @Query("SELECT s FROM Showtime s WHERE " +
-            "(:movieId IS NULL OR s.movie.id = :movieId) AND " +
-            "(:hallId IS NULL OR s.hall.id = :hallId) AND " +
-            "(:date IS NULL OR s.date = :date) AND " +
-            "s.status = 'ACTIVE'")
-    List<Showtime> findByFilters(
-            @Param("movieId") Long movieId,
-            @Param("hallId") Long hallId,
-            @Param("date") LocalDate date
+    // Derived queries avoid PostgreSQL null-parameter type errors from (:param IS NULL OR ...) JPQL patterns.
+    List<Showtime> findByStatus(ShowtimeStatus status);
+
+    List<Showtime> findByMovieIdAndStatus(Long movieId, ShowtimeStatus status);
+
+    List<Showtime> findByHallIdAndStatus(Long hallId, ShowtimeStatus status);
+
+    List<Showtime> findByDateAndStatus(LocalDate date, ShowtimeStatus status);
+
+    List<Showtime> findByMovieIdAndHallIdAndStatus(Long movieId, Long hallId, ShowtimeStatus status);
+
+    List<Showtime> findByMovieIdAndDateAndStatus(Long movieId, LocalDate date, ShowtimeStatus status);
+
+    List<Showtime> findByHallIdAndDateAndStatus(Long hallId, LocalDate date, ShowtimeStatus status);
+
+    List<Showtime> findByMovieIdAndHallIdAndDateAndStatus(
+            Long movieId,
+            Long hallId,
+            LocalDate date,
+            ShowtimeStatus status
     );
 
     // checks if hall is already booked at given date and time
@@ -39,6 +49,4 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
             @Param("startTime") LocalTime startTime,
             @Param("endTime") LocalTime endTime
     );
-
-    List<Showtime> findByMovieIdAndStatus(Long movieId, ShowtimeStatus status);
 }

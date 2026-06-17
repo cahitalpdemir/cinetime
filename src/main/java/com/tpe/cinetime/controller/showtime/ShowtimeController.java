@@ -5,6 +5,7 @@ import com.tpe.cinetime.payload.response.showtime.SeatAvailabilityResponse;
 import com.tpe.cinetime.payload.response.showtime.ShowtimeResponse;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.service.showtime.ShowtimeService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +41,12 @@ public class ShowtimeController {
     //public — filter showtimes by optional movieId, hallId and date
     @GetMapping("/showtimes")
     public ResponseEntity<ResponseMessage<List<ShowtimeResponse>>> getShowtimes(
-            @RequestParam(required = false) Long movieId,
-            @RequestParam(required = false) Long hallId,
-            @RequestParam(required = false)
+            @Parameter(description = "Filter by movie id", example = "1")
+            @RequestParam(name = "movieId", required = false) Long movieId,
+            @Parameter(description = "Filter by hall id", example = "1")
+            @RequestParam(name = "hallId", required = false) Long hallId,
+            @Parameter(description = "Filter by showtime date in yyyy-MM-dd format", example = "2026-07-20")
+            @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.ok(showtimeService.getShowtimes(movieId, hallId, date));
     }
