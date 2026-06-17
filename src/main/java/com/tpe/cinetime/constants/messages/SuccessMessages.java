@@ -21,6 +21,8 @@ public final class SuccessMessages {
     public static final String ADMIN_UPDATED_USER_SUCCESSFULLY = "User updated successfully. User id: %d";
     public static final String ADMIN_DELETED_USER_SUCCESSFULLY = "User deleted successfully.";
 
+    //Email
+
     //Cinema
     public static final String CINEMA_SAVED_SUCCESSFULLY = "Cinema saved successfully";
     public static final String CINEMA_FETCHED_SUCCESSFULLY = "Cinema fetched successfully";

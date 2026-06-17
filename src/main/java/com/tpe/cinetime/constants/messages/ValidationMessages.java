@@ -36,6 +36,7 @@ public final class ValidationMessages {
     //Gender
     public static final String GENDER_NOT_BLANK = "Gender cannot be blank";
 
+
     //Reset Password Token
     public static final String RESET_PASSWORD_TOKEN_NOT_BLANK = "Reset password token cannot be blank";
 
@@ -53,4 +54,6 @@ public final class ValidationMessages {
     public static final String SHOWTIME_FORMAT_SIZE = "Format must be at most 20 characters";
     public static final String SHOWTIME_PRICE_NOT_NULL = "Price cannot be null";
     public static final String SHOWTIME_PRICE_POSITIVE = "Price must be greater than zero";
+
+
 }

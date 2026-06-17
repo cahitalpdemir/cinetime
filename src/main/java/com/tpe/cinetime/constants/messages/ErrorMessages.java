@@ -50,4 +50,6 @@ public final class ErrorMessages {
     public static final String SHOWTIME_HALL_CONFLICT = "This hall is already booked for the selected date and time";
     public static final String SHOWTIME_IS_CANCELLED = "Cannot make a booking for a cancelled showtime";
     public static final String SHOWTIME_IS_SOLD_OUT = "All seats are sold out for this showtime";
+
+
 }
