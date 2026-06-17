@@ -2,7 +2,7 @@ package com.tpe.cinetime.payload.response.showtime;
 
 import com.tpe.cinetime.enums.ShowtimeStatus;
 import lombok.*;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,7 +32,7 @@ public class ShowtimeResponse {
     private LocalTime endTime;
     private String language;
     private String format;
-    private Double price;
+    private BigDecimal price;
     private ShowtimeStatus status;
     private LocalDateTime createdAt;
 }

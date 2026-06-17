@@ -57,6 +57,9 @@ public class ShowtimeService {
 
         //endTime is calculated from movie duration in minutes
         LocalTime endTime = request.getStartTime().plusMinutes(movie.getDuration());
+        if (!endTime.isAfter(request.getStartTime())) {
+    throw new BadRequestException(ErrorMessages.SHOWTIME_INVALID_TIME_RANGE);
+}
 
         //prevent double booking for the same hall at the same time
         boolean hasConflict = showtimeRepository.existsConflictingShowtime(

@@ -2,7 +2,7 @@ package com.tpe.cinetime.entity;
 
 import com.tpe.cinetime.enums.ShowtimeStatus;
 import lombok.*;
-
+import java.math.BigDecimal;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,8 +47,8 @@ public class Showtime {
     @Column(nullable = false, length = 20)
     private String format;
 
-    @Column(nullable = false)
-    private Double price;
+    @Column(nullable = false,precision=10, scale=2)
+    private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

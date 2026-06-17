@@ -2,7 +2,7 @@ package com.tpe.cinetime.payload.request.showtime;
 
 import com.tpe.cinetime.constants.messages.ValidationMessages;
 import lombok.Data;
-
+import java.math.BigDecimal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -36,5 +36,5 @@ public class ShowtimeRequest {
 
     @NotNull(message = ValidationMessages.SHOWTIME_PRICE_NOT_NULL)
     @Positive(message = ValidationMessages.SHOWTIME_PRICE_POSITIVE)
-    private Double price;
+    private BigDecimal price;
 }
