@@ -35,10 +35,21 @@ public final class ErrorMessages {
 
     //Hall
     public static final String CINEMA_NOT_FOUND_FOR_HALL = "Cinema not found for hall. Cinema id: %d";
+    public static final String HALL_NOT_FOUND = "Hall not found. Hall id: %d";
+
+    //Movie
+    public static final String MOVIE_NOT_FOUND = "Movie not found. Movie id: %d";
 
     //Email
     public static final String EMAIL_SEND_FAILED = "Password reset email could not be sent to: ";
 
+    //Showtime
+    public static final String SHOWTIME_NOT_FOUND = "Showtime not found. Id: %d";
+    public static final String SHOWTIME_DATE_IN_PAST = "Showtime cannot be created in the past";
+    public static final String SHOWTIME_ALREADY_CANCELLED = "This showtime is already cancelled";
+    public static final String SHOWTIME_HALL_CONFLICT = "This hall is already booked for the selected date and time";
+    public static final String SHOWTIME_IS_CANCELLED = "Cannot make a booking for a cancelled showtime";
+    public static final String SHOWTIME_IS_SOLD_OUT = "All seats are sold out for this showtime";
 
 
 }

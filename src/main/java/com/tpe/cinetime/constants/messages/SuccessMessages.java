@@ -31,4 +31,9 @@ public final class SuccessMessages {
     //Hall
     public static final String HALL_SAVED_SUCCESSFULLY = "Hall saved successfully";
 
+    //Showtime
+    public static final String SHOWTIME_CREATED_SUCCESSFULLY = "Showtime created successfully";
+    public static final String SHOWTIME_CANCELLED_SUCCESSFULLY = "Showtime cancelled successfully";
+    public static final String SHOWTIMES_FETCHED_SUCCESSFULLY = "Showtimes fetched successfully";
+    public static final String SHOWTIME_SEATS_FETCHED_SUCCESSFULLY = "Showtime seats fetched successfully";
 }

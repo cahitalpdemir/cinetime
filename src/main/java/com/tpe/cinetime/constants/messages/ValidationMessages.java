@@ -2,7 +2,7 @@ package com.tpe.cinetime.constants.messages;
 
 public final class ValidationMessages {
 
-    private  ValidationMessages() {
+    private ValidationMessages() {
     }
 
     //Name / Surname
@@ -43,6 +43,17 @@ public final class ValidationMessages {
     //Refresh Token
     public static final String REFRESH_TOKEN_NOT_BLANK = "Refresh token cannot be blank";
 
+    //Showtime
+    public static final String SHOWTIME_MOVIE_ID_NOT_NULL = "Movie id cannot be null";
+    public static final String SHOWTIME_HALL_ID_NOT_NULL = "Hall id cannot be null";
+    public static final String SHOWTIME_DATE_NOT_NULL = "Date cannot be null";
+    public static final String SHOWTIME_START_TIME_NOT_NULL = "Start time cannot be null";
+    public static final String SHOWTIME_LANGUAGE_NOT_BLANK = "Language cannot be blank";
+    public static final String SHOWTIME_LANGUAGE_SIZE = "Language must be at most 50 characters";
+    public static final String SHOWTIME_FORMAT_NOT_BLANK = "Format cannot be blank";
+    public static final String SHOWTIME_FORMAT_SIZE = "Format must be at most 20 characters";
+    public static final String SHOWTIME_PRICE_NOT_NULL = "Price cannot be null";
+    public static final String SHOWTIME_PRICE_POSITIVE = "Price must be greater than zero";
 
 
 }
