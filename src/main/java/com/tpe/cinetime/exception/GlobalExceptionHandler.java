@@ -1,13 +1,12 @@
 package com.tpe.cinetime.exception;
 
-import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
+import com.tpe.cinetime.payload.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 
@@ -55,19 +54,6 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    //Handles wrong email or password errors during login
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ResponseMessage<?>> handleBadCredentialsException(
-            BadCredentialsException exception
-    ){
-        ResponseMessage<?> response = ResponseMessage.builder()
-                .httpStatus(HttpStatus.UNAUTHORIZED)
-                .message("Email or password is incorrect")
-                .build();
-
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     //Handles all other unexpected exceptions
