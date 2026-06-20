@@ -6,7 +6,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -50,11 +52,11 @@ public class User {
     @JoinColumn(name="role_id", nullable = false)
     private Role role;
 
-    /*
-    @OneToMany(mappedBy = "user")
-    private List<Booking> bookings;
-    */
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Booking> bookings = new ArrayList<>();
 
     @Builder.Default
     private Boolean builtIn = false; // @Builder.Default bu degeri kullanir.
