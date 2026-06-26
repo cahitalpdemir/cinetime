@@ -117,6 +117,23 @@ public class ShowtimeService {
                 .build();
     }
 
+    //returns active upcoming showtimes for a movie
+    public List<ShowtimeResponse> getUpcomingShowtimesByMovieId(Long movieId) {
+        movieRepository.findById(movieId)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(ErrorMessages.MOVIE_NOT_FOUND, movieId)));
+
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+
+        return showtimeRepository.findByMovieIdAndStatus(movieId, ShowtimeStatus.ACTIVE)
+                .stream()
+                .filter(showtime -> showtime.getDate().isAfter(today)
+                        || (showtime.getDate().isEqual(today) && !showtime.getStartTime().isBefore(now)))
+                .map(showtimeMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
     private List<Showtime> findActiveShowtimes(Long movieId, Long hallId, LocalDate date) {
         ShowtimeStatus active = ShowtimeStatus.ACTIVE;
 

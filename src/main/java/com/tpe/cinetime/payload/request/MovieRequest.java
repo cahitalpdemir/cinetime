@@ -1,6 +1,7 @@
 package com.tpe.cinetime.payload.request;
 
 
+import com.tpe.cinetime.enums.MovieStatus;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -42,7 +43,7 @@ public class MovieRequest {
     @NotBlank
     private String genre;
 
-    private Integer status = 0;
+    private MovieStatus status = MovieStatus.COMING_SOON;
 
     private String specialHalls;
 

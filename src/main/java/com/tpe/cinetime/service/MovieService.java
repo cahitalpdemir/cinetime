@@ -2,6 +2,7 @@ package com.tpe.cinetime.service;
 
 
 import com.tpe.cinetime.entity.Movie;
+import com.tpe.cinetime.enums.MovieStatus;
 import com.tpe.cinetime.exception.NotFoundException;
 import com.tpe.cinetime.payload.request.MovieRequest;
 import com.tpe.cinetime.payload.response.MovieResponse;
@@ -37,21 +38,21 @@ public class MovieService {
         return mapToResponse(movie);
     }
 
-//    public Page<MovieResponse> getMoviesBySpecialHall(String hall, Pageable pageable) {
-//        return movieRepository.findBySpecialHall(hall, pageable).map(this::mapToResponse);
-//    }
+    public Page<MovieResponse> getMoviesBySpecialHall(String hall, Pageable pageable) {
+        return movieRepository.findBySpecialHall(hall, pageable).map(this::mapToResponse);
+    }
 
     public Page<MovieResponse> getMoviesInTheaters(Pageable pageable) {
-        return movieRepository.findByStatus(1, pageable).map(this::mapToResponse);
+        return movieRepository.findByStatus(MovieStatus.NOW_SHOWING, pageable).map(this::mapToResponse);
     }
 
     public Page<MovieResponse> getMoviesComingSoon(Pageable pageable) {
-        return movieRepository.findByStatus(0, pageable).map(this::mapToResponse);
+        return movieRepository.findByStatus(MovieStatus.COMING_SOON, pageable).map(this::mapToResponse);
     }
 
-//    public Page<MovieResponse> getMoviesPresale(Pageable pageable) {
-//        return movieRepository.findByStatus(2, pageable).map(this::mapToResponse);
-//    }
+    public Page<MovieResponse> getMoviesArchived(Pageable pageable) {
+        return movieRepository.findByStatus(MovieStatus.ARCHIVED, pageable).map(this::mapToResponse);
+    }
 
     public MovieResponse getMovieById(Long id) {
         Movie movie = movieRepository.findById(id)
@@ -76,7 +77,7 @@ public class MovieService {
                 .cast(request.getCast())
                 .formats(request.getFormats())
                 .genre(request.getGenre())
-                .status(request.getStatus() != null ? request.getStatus() : 0)
+                .status(request.getStatus() != null ? request.getStatus() : MovieStatus.COMING_SOON)
                 .specialHalls(request.getSpecialHalls())
                 .build();
 

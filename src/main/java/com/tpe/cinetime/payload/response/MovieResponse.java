@@ -1,5 +1,6 @@
 package com.tpe.cinetime.payload.response;
 
+import com.tpe.cinetime.enums.MovieStatus;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ public class MovieResponse {
     private List<String> formats;
     private String genre;
     private Long posterId;
-    private Integer status;
+    private MovieStatus status;
     private String specialHalls;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
