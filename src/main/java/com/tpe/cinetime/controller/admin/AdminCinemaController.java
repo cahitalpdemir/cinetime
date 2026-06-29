@@ -3,6 +3,7 @@ package com.tpe.cinetime.controller.admin;
 import com.tpe.cinetime.payload.request.cinema.CinemaRequestDTO;
 import com.tpe.cinetime.payload.request.cinema.HallRequestDTO;
 import com.tpe.cinetime.payload.response.cinema.CinemaResponseDTO;
+import com.tpe.cinetime.payload.response.cinema.HallResponseDTO;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.service.cinema.CinemaService;
 import com.tpe.cinetime.service.cinema.HallService;
@@ -32,7 +33,7 @@ public class AdminCinemaController {
 
     // POST /admin/halls
     @PostMapping("/halls")
-    public ResponseEntity<ResponseMessage<Void>> saveHall(
+    public ResponseEntity<ResponseMessage<HallResponseDTO>> saveHall(
             @RequestBody HallRequestDTO hallRequestDTO) {
         return ResponseEntity.ok(hallService.saveHall(hallRequestDTO));
     }
