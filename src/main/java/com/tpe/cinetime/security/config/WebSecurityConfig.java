@@ -3,8 +3,10 @@ package com.tpe.cinetime.security.config;
 import com.tpe.cinetime.security.AuthTokenFilter;
 import com.tpe.cinetime.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 @Configuration
 @EnableWebSecurity
@@ -76,9 +79,24 @@ public class WebSecurityConfig {
             }
         };
     }
+    //------------------------------------------
+
+    //app.security.enabled=false ise bu bean aktif olur (her şeye izin verir)
+    @Bean
+    @ConditionalOnProperty(name = "app.security.enabled", havingValue = "false")
+    public SecurityFilterChain disabledSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+        return http.build();
+    }
+    //------------------------------------------
+
 
     //Security kurallarini tanimlama
+    //app.security.enabled=true ise bu bean aktif olur
     @Bean
+    @ConditionalOnProperty(name = "app.security.enabled", havingValue = "true", matchIfMissing = true)
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
 
         httpSecurity
