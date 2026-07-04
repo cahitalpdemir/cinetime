@@ -4,9 +4,9 @@ import com.tpe.cinetime.security.AuthTokenFilter;
 import com.tpe.cinetime.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,6 +33,9 @@ public class WebSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final AuthTokenFilter authTokenFilter;
+
+    @Value("${app.cors.allowed-origins:http://localhost:3000}")
+    private String[] allowedOrigins;
 
 
     //Password encoder -> BCrypt kullaniyorum
@@ -65,7 +68,7 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    //CORS ayarlari -> Frontend'den gelen isteklere izin verme
+    // Keep browser access explicit and environment-driven instead of allowing every origin.
     @Bean
     public WebMvcConfigurer corsConfigurer(){
 
@@ -73,9 +76,10 @@ public class WebSecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry corsRegistry){
                 corsRegistry.addMapping("/**")
-                        .allowedOrigins("*") //production'da frontend URL yazilmasi gerek
-                        .allowedHeaders("*")
-                        .allowedMethods("*");
+                        .allowedOrigins(allowedOrigins)
+                        .allowedHeaders("Authorization", "Content-Type", "Accept")
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                        .maxAge(3600);
             }
         };
     }
@@ -86,6 +90,8 @@ public class WebSecurityConfig {
     @ConditionalOnProperty(name = "app.security.enabled", havingValue = "false")
     public SecurityFilterChain disabledSecurityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         return http.build();

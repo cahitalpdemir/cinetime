@@ -1,6 +1,6 @@
 # CineTime Frontend API Contract
 
-Version: 1.0  
+Version: 1.1
 Base URL: `http://localhost:8081`
 
 This file is the canonical contract for the first frontend integration. Swagger, Postman and frontend services should use these paths and response shapes.
@@ -148,6 +148,11 @@ Booking request:
 
 The backend accepts at most 10 seats in one booking. Duplicate or previously booked seats return `400 BAD_REQUEST`.
 
-## Known Integration Boundary
+## Browser Integration
 
-CORS and the final public/admin/customer authorization matrix are owned by the security configuration task. This contract documents the intended access level, but that configuration is intentionally outside this change set.
+- The default allowed origin is `http://localhost:3000`.
+- Additional origins are configured with the comma-separated `CORS_ALLOWED_ORIGINS` environment value.
+- Public catalog endpoints work without a token.
+- `/admin/**` requires `ADMIN`, except the documented movie operations that also allow `MANAGER`.
+- `/customer/**` requires `CUSTOMER`.
+- Unknown origins are rejected during the browser preflight request.

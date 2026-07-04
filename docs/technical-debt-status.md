@@ -1,7 +1,7 @@
 # CineTime Backend Technical Debt Status
 
-Date: 2026-07-04  
-Scope: Frontend handoff stabilization without changing security configuration files.
+Date: 2026-07-04
+Scope: Frontend handoff stabilization, including browser security boundaries.
 
 ## Completed In This Change Set
 
@@ -23,22 +23,20 @@ Scope: Frontend handoff stabilization without changing security configuration fi
 | Email | Password-change timestamp now uses the application formatter instead of a Hibernate formatter |
 | Test isolation | H2 test configuration and focused controller, enum, validation and hall tests were added |
 | Repository hygiene | `.env.example` was added; `.env`, logs and `.DS_Store` stay outside Git |
+| Authorization matrix | Public catalog, admin and customer routes are explicitly separated |
+| CORS | Wildcard origins were replaced with environment-driven frontend origins |
+| Security regression | Public, protected and CORS preflight behavior is covered by integration tests |
 
-## Intentionally Not Changed
+## Frontend Handoff Status
 
-The following files were checksum-verified as unchanged:
-
-```text
-src/main/java/com/tpe/cinetime/security/**
-```
-
-Therefore CORS and the final authorization matrix remain separate security tasks.
+The backend is ready for local frontend integration. The default frontend origin is
+`http://localhost:3000`, the API contract is documented, and the secure `prod` profile
+is active by default.
 
 ## Remaining Priority Debt
 
 | Priority | Item | Reason |
 | --- | --- | --- |
-| P0 | CORS origins and authorization matrix | Requires an explicit security configuration change |
 | P1 | Database migrations with Flyway/Liquibase | `ddl-auto=update` is still used for local development |
 | P1 | Concurrent seat reservation protection | Sequential duplicate checks exist, but race conditions need DB locking/constraints |
 | P1 | Cancel/refund lifecycle | Confirmed booking refund rules need product decisions |
@@ -53,4 +51,4 @@ Before merging:
 2. Start the application and verify that Redis repository and open-in-view warnings are absent.
 3. Re-import/update Postman requests for the movie response envelope.
 4. Run the clean-database MVP regression.
-5. Confirm `git diff -- src/main/java/com/tpe/cinetime/security` is empty.
+5. Verify CORS from the configured frontend origin.
