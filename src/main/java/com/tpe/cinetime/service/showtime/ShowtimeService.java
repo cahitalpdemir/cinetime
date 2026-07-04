@@ -6,6 +6,7 @@ import com.tpe.cinetime.entity.Hall;
 import com.tpe.cinetime.entity.Movie;
 import com.tpe.cinetime.entity.Seat;
 import com.tpe.cinetime.entity.Showtime;
+import com.tpe.cinetime.enums.BookingStatus;
 import com.tpe.cinetime.enums.ShowtimeStatus;
 import com.tpe.cinetime.exception.BadRequestException;
 import com.tpe.cinetime.exception.NotFoundException;
@@ -15,9 +16,11 @@ import com.tpe.cinetime.payload.response.showtime.SeatAvailabilityResponse;
 import com.tpe.cinetime.payload.response.showtime.ShowtimeResponse;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.repository.MovieRepository;
+import com.tpe.cinetime.repository.booking.BookingSeatRepository;
 import com.tpe.cinetime.repository.cinema.HallRepository;
 import com.tpe.cinetime.repository.cinema.SeatRepository;
 import com.tpe.cinetime.repository.showtime.ShowtimeRepository;
+import com.tpe.cinetime.service.booking.BookingCancellationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,11 +38,16 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ShowtimeService {
 
+    private static final List<BookingStatus> ACTIVE_BOOKING_STATUSES =
+            List.of(BookingStatus.PENDING, BookingStatus.CONFIRMED);
+
     private final ShowtimeRepository showtimeRepository;
     private final MovieRepository movieRepository;
     private final HallRepository hallRepository;
     private final SeatRepository seatRepository;
     private final ShowtimeMapper showtimeMapper;
+    private final BookingSeatRepository bookingSeatRepository;
+    private final BookingCancellationService bookingCancellationService;
 
     //create a new showtime, validates past datetime and hall conflicts
     @Transactional
@@ -88,15 +97,22 @@ public class ShowtimeService {
                 .build();
     }
 
-    //cancel a showtime — only active showtimes can be cancelled
+    //cancel a showtime â€” only active showtimes can be cancelled
     @Transactional
     public ResponseMessage<ShowtimeResponse> cancelShowtime(Long id) {
-        Showtime showtime = getShowtimeById(id);
+        Showtime showtime = showtimeRepository.findByIdForUpdate(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(ErrorMessages.SHOWTIME_NOT_FOUND, id)));
 
         if (showtime.getStatus() == ShowtimeStatus.CANCELLED) {
             throw new BadRequestException(ErrorMessages.SHOWTIME_ALREADY_CANCELLED);
         }
+        if (!LocalDateTime.now().isBefore(
+                LocalDateTime.of(showtime.getDate(), showtime.getStartTime()))) {
+            throw new BadRequestException(ErrorMessages.SHOWTIME_CANCELLATION_AFTER_START);
+        }
 
+        bookingCancellationService.cancelForShowtime(showtime);
         showtime.setStatus(ShowtimeStatus.CANCELLED);
         Showtime saved = showtimeRepository.save(showtime);
 
@@ -170,16 +186,16 @@ public class ShowtimeService {
         Showtime showtime = getShowtimeById(id);
 
         List<Seat> allSeats = seatRepository.findByHallId(showtime.getHall().getId());
+        Set<Long> bookedSeatIds = bookingSeatRepository.findBookedSeatIdsByShowtimeId(
+                showtime.getId(), ACTIVE_BOOKING_STATUSES);
 
-        //rezervasyon yapılan koltuk no ları erencan bey'in kodlamasından sonra eklenecek
-        //for now all seats are returned as available
         List<SeatAvailabilityResponse> seatResponses = allSeats.stream()
            .map(seat -> SeatAvailabilityResponse.builder()
                         .seatId(seat.getId())
                         .rowLetter(seat.getRowLetter())
                         .seatNumber(seat.getSeatNumber())
                         .seatType(seat.getSeatType())
-                        .isBooked(false)
+                        .isBooked(bookedSeatIds.contains(seat.getId()))
                         .build())
                 .collect(Collectors.toList());
 
@@ -192,8 +208,10 @@ public class ShowtimeService {
 
     //called by booking service to validate showtime before booking
     public void validateShowtimeForBooking(Long showtimeId) {
-        Showtime showtime = getShowtimeById(showtimeId);
+        validateShowtimeForBooking(getShowtimeById(showtimeId));
+    }
 
+    public void validateShowtimeForBooking(Showtime showtime) {
         if (showtime.getStatus() == ShowtimeStatus.CANCELLED) {
             throw new BadRequestException(ErrorMessages.SHOWTIME_IS_CANCELLED);
         }
@@ -202,7 +220,7 @@ public class ShowtimeService {
         }
     }
 
-    //return showtime entity by id — used internally by other methods
+    //return showtime entity by id â€” used internally by other methods
     public Showtime getShowtimeById(Long id) {
         return showtimeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(

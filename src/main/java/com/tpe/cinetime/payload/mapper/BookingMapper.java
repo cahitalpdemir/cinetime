@@ -58,6 +58,7 @@ public class BookingMapper {
                 .paymentMethod(payment.getPaymentMethod())
                 .transactionId(payment.getTransactionId())
                 .createdAt(payment.getCreatedAt())
+                .refundedAt(payment.getRefundedAt())
                 .build();
     }
 
@@ -66,6 +67,7 @@ public class BookingMapper {
                 .id(ticket.getId())
                 .ticketNumber(ticket.getTicketNumber())
                 .qrCode(ticket.getQrCode())
+                .status(ticket.getStatus())
                 .createdAt(ticket.getCreatedAt())
                 .bookingId(ticket.getBooking().getId())
                 .showtimeId(ticket.getBooking().getShowtime().getId())

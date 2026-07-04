@@ -1,5 +1,6 @@
 package com.tpe.cinetime.entity;
 
+import com.tpe.cinetime.enums.TicketStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,8 +30,13 @@ public class Ticket {
     @Column(nullable = false, unique = true)
     private String ticketNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 1000)
     private String qrCode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    @Builder.Default
+    private TicketStatus status = TicketStatus.ACTIVE;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

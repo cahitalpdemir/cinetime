@@ -30,7 +30,7 @@ public class PaymentService {
 
     @Transactional
     public ResponseMessage<PaymentResponse> processPayment(Long bookingId, PaymentRequest request) {
-        Booking booking = bookingService.getBookingForCurrentUser(bookingId);
+        Booking booking = bookingService.getBookingForCurrentUserForUpdate(bookingId);
 
         if (booking.getStatus() == BookingStatus.CONFIRMED) {
             throw new BadRequestException(BookingErrorMessages.BOOKING_ALREADY_CONFIRMED);

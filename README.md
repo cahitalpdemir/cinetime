@@ -7,6 +7,7 @@ Spring Boot REST API for the CineTime cinema ticket booking application.
 - Java 17
 - Spring Boot 2.7.14
 - PostgreSQL
+- Flyway database migrations
 - Spring Security and JWT
 - Redis for refresh tokens
 - Swagger/OpenAPI
@@ -65,6 +66,7 @@ Real secrets must not be committed. Local defaults are development-only values.
 | `DB_USERNAME` | PostgreSQL user |
 | `DB_PASSWORD` | PostgreSQL password |
 | `JWT_SECRET` | JWT signing secret |
+| `TICKET_QR_SECRET` | Dedicated HMAC secret for signed ticket QR payloads |
 | `ADMIN_EMAIL` | Initial admin email |
 | `ADMIN_PASSWORD` | Initial admin password |
 | `REDIS_HOST` | Redis host |
@@ -75,6 +77,21 @@ Real secrets must not be committed. Local defaults are development-only values.
 | `FRONTEND_URL` | Frontend base URL for password reset links |
 | `CORS_ALLOWED_ORIGINS` | Browser origins allowed to call the API |
 | `SPRING_PROFILES_ACTIVE` | Runtime profile; defaults to secure `prod` |
+| `BOOKING_CANCELLATION_CUTOFF_MINUTES` | Confirmed booking refund cutoff; defaults to 120 minutes |
+
+## Database Migrations
+
+Flyway owns the database schema. Hibernate runs with `ddl-auto=validate` and never
+changes tables automatically. Existing pre-Flyway databases are baselined at V1;
+new databases run every migration from V1.
+
+## Booking Lifecycle
+
+- Booking creation locks the showtime row to prevent concurrent seat sales.
+- Pending bookings can be cancelled.
+- Confirmed bookings can be cancelled and mock-refunded before the configured cutoff.
+- Cancelling a showtime cancels active bookings, refunds completed payments and cancels tickets.
+- Ticket QR values are signed JWT payloads. Admins can verify or check in a ticket.
 
 ## Git Hygiene
 

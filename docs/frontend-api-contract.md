@@ -1,6 +1,6 @@
 # CineTime Frontend API Contract
 
-Version: 1.1
+Version: 1.2
 Base URL: `http://localhost:8081`
 
 This file is the canonical contract for the first frontend integration. Swagger, Postman and frontend services should use these paths and response shapes.
@@ -132,7 +132,7 @@ The current filter uses `hallId`, not `cinemaId`.
 | Create booking | `POST /customer/bookings` | CUSTOMER | `201 CREATED` |
 | My bookings | `GET /customer/bookings` | CUSTOMER | `200 OK` |
 | Booking detail | `GET /customer/bookings/{id}` | CUSTOMER | `200 OK` |
-| Cancel pending booking | `PATCH /customer/bookings/{id}/cancel` | CUSTOMER | `200 OK` |
+| Cancel/refund booking | `PATCH /customer/bookings/{id}/cancel` | CUSTOMER | `200 OK` |
 | Mock payment | `POST /customer/bookings/{id}/payment` | CUSTOMER | `200 OK` |
 | Booking tickets | `GET /customer/bookings/{id}/tickets` | CUSTOMER | `200 OK` |
 | Ticket detail | `GET /customer/tickets/{ticketNumber}` | CUSTOMER | `200 OK` |
@@ -148,6 +148,31 @@ Booking request:
 
 The backend accepts at most 10 seats in one booking. Duplicate or previously booked seats return `400 BAD_REQUEST`.
 
+Confirmed bookings are refunded when cancellation happens before the configured cutoff.
+The response then contains `payment.status: "REFUNDED"` and `payment.refundedAt`.
+Cancelled bookings release their seats for the showtime.
+
+Ticket responses include `status` (`ACTIVE`, `USED`, `CANCELLED`). The `qrCode` value
+is a signed JWT payload and must be rendered as the QR content without modification.
+
+## Admin Ticket Operations
+
+| Flow | Method and path | Auth | Success |
+| --- | --- | --- | --- |
+| Verify signed QR | `POST /admin/tickets/verify` | ADMIN | `200 OK` |
+| Check in ticket | `POST /admin/tickets/check-in` | ADMIN | `200 OK` |
+
+Request body:
+
+```json
+{
+  "qrCode": "signed-ticket-payload"
+}
+```
+
+Check-in changes the ticket status from `ACTIVE` to `USED`. Expired, tampered,
+cancelled or previously used QR payloads return `400 BAD_REQUEST`.
+
 ## Browser Integration
 
 - The default allowed origin is `http://localhost:3000`.
@@ -156,3 +181,5 @@ The backend accepts at most 10 seats in one booking. Duplicate or previously boo
 - `/admin/**` requires `ADMIN`, except the documented movie operations that also allow `MANAGER`.
 - `/customer/**` requires `CUSTOMER`.
 - Unknown origins are rejected during the browser preflight request.
+- Seat availability reflects active pending/confirmed bookings.
+- Concurrent booking requests for the same showtime are serialized by a database lock.
