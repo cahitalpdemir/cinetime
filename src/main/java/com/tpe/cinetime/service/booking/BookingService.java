@@ -2,6 +2,7 @@ package com.tpe.cinetime.service.booking;
 
 import com.tpe.cinetime.constants.messages.BookingErrorMessages;
 import com.tpe.cinetime.constants.messages.BookingSuccessMessages;
+import com.tpe.cinetime.constants.messages.ErrorMessages;
 import com.tpe.cinetime.entity.*;
 import com.tpe.cinetime.enums.BookingStatus;
 import com.tpe.cinetime.enums.ShowtimeStatus;
@@ -43,13 +44,16 @@ public class BookingService {
     private final ShowtimeService showtimeService;
     private final BookingMapper bookingMapper;
     private final MethodHelper methodHelper;
+    private final BookingCancellationService bookingCancellationService;
 
     @Transactional
     public ResponseMessage<BookingResponse> createBooking(BookingRequest request) {
         User user = methodHelper.currentUser();
-        Showtime showtime = showtimeService.getShowtimeById(request.getShowtimeId());
+        Showtime showtime = showtimeRepository.findByIdForUpdate(request.getShowtimeId())
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(ErrorMessages.SHOWTIME_NOT_FOUND, request.getShowtimeId())));
 
-        showtimeService.validateShowtimeForBooking(showtime.getId());
+        showtimeService.validateShowtimeForBooking(showtime);
         validateShowtimeNotInPast(showtime);
         validateSeatSelection(request.getSeatIds());
 
@@ -118,21 +122,15 @@ public class BookingService {
 
     @Transactional
     public ResponseMessage<BookingResponse> cancelBooking(Long id) {
-        Booking booking = getBookingForCurrentUser(id);
-
-        if (booking.getStatus() == BookingStatus.CANCELLED) {
-            throw new BadRequestException(BookingErrorMessages.BOOKING_ALREADY_CANCELLED);
-        }
-        if (booking.getStatus() == BookingStatus.CONFIRMED) {
-            throw new BadRequestException(BookingErrorMessages.BOOKING_CANNOT_CANCEL_CONFIRMED);
-        }
-
-        booking.setStatus(BookingStatus.CANCELLED);
-        Booking saved = bookingRepository.save(booking);
+        Booking booking = getBookingForCurrentUserForUpdate(id);
+        boolean refunded = bookingCancellationService.cancelByCustomer(booking);
+        restoreShowtimeAvailabilityAfterCancellation(booking.getShowtime());
 
         return ResponseMessage.<BookingResponse>builder()
-                .object(bookingMapper.toResponse(saved))
-                .message(BookingSuccessMessages.BOOKING_CANCELLED_SUCCESSFULLY)
+                .object(bookingMapper.toResponse(booking))
+                .message(refunded
+                        ? BookingSuccessMessages.BOOKING_CANCELLED_AND_REFUNDED_SUCCESSFULLY
+                        : BookingSuccessMessages.BOOKING_CANCELLED_SUCCESSFULLY)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
@@ -145,8 +143,18 @@ public class BookingService {
                         String.format(BookingErrorMessages.BOOKING_NOT_FOUND, id)));
     }
 
+    public Booking getBookingForCurrentUserForUpdate(Long id) {
+        User user = methodHelper.currentUser();
+
+        return bookingRepository.findByIdAndUserIdForUpdate(id, user.getId())
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(BookingErrorMessages.BOOKING_NOT_FOUND, id)));
+    }
+
     public void updateShowtimeSoldOutStatus(Long showtimeId) {
-        Showtime showtime = showtimeService.getShowtimeById(showtimeId);
+        Showtime showtime = showtimeRepository.findByIdForUpdate(showtimeId)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(ErrorMessages.SHOWTIME_NOT_FOUND, showtimeId)));
         List<Seat> allSeats = seatRepository.findByHallId(showtime.getHall().getId());
 
         long bookedCount = bookingSeatRepository.countByShowtimeIdAndBooking_StatusIn(
@@ -154,6 +162,13 @@ public class BookingService {
 
         if (bookedCount >= allSeats.size()) {
             showtime.setStatus(ShowtimeStatus.SOLD_OUT);
+            showtimeRepository.save(showtime);
+        }
+    }
+
+    private void restoreShowtimeAvailabilityAfterCancellation(Showtime showtime) {
+        if (showtime.getStatus() == ShowtimeStatus.SOLD_OUT) {
+            showtime.setStatus(ShowtimeStatus.ACTIVE);
             showtimeRepository.save(showtime);
         }
     }

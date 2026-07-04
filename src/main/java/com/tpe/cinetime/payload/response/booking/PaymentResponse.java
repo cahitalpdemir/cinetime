@@ -18,4 +18,5 @@ public class PaymentResponse {
     private PaymentMethod paymentMethod;
     private String transactionId;
     private LocalDateTime createdAt;
+    private LocalDateTime refundedAt;
 }

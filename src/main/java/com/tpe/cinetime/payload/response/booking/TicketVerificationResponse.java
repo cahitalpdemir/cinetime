@@ -1,36 +1,28 @@
 package com.tpe.cinetime.payload.response.booking;
 
-import com.tpe.cinetime.enums.SeatType;
 import com.tpe.cinetime.enums.TicketStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class TicketResponse {
+public class TicketVerificationResponse {
 
-    private Long id;
+    private boolean valid;
     private String ticketNumber;
-    private String qrCode;
     private TicketStatus status;
-    private LocalDateTime createdAt;
-
-    private Long bookingId;
-    private Long showtimeId;
-    private Long movieId;
     private String movieTitle;
     private String cinemaName;
     private String hallName;
     private LocalDate showtimeDate;
     private LocalTime startTime;
-
-    private Long seatId;
     private String rowLetter;
     private Integer seatNumber;
-    private SeatType seatType;
 }

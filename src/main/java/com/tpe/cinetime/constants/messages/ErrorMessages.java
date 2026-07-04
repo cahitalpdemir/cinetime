@@ -49,6 +49,8 @@ public final class ErrorMessages {
     public static final String SHOWTIME_ALREADY_CANCELLED = "This showtime is already cancelled";
     public static final String SHOWTIME_HALL_CONFLICT = "This hall is already booked for the selected date and time";
     public static final String SHOWTIME_IS_CANCELLED = "Cannot make a booking for a cancelled showtime";
+    public static final String SHOWTIME_CANCELLATION_AFTER_START =
+            "A showtime cannot be cancelled after it has started";
     public static final String SHOWTIME_IS_SOLD_OUT = "All seats are sold out for this showtime";
 
 

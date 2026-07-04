@@ -44,6 +44,8 @@ public class Payment {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    private LocalDateTime refundedAt;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

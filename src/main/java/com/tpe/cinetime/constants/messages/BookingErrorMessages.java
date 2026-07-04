@@ -20,4 +20,11 @@ public final class BookingErrorMessages {
     public static final String PAYMENT_FAILED = "Payment processing failed. Please try again";
     public static final String TICKET_NOT_FOUND = "Ticket not found. Ticket number: %s";
     public static final String TICKET_ACCESS_DENIED = "You do not have access to this ticket";
+    public static final String TICKET_QR_INVALID = "Ticket QR code is invalid, expired or inactive";
+    public static final String BOOKING_CANCELLATION_WINDOW_CLOSED =
+            "The cancellation window for this booking has closed";
+    public static final String PAYMENT_REFUND_NOT_AVAILABLE =
+            "A completed payment is required before this booking can be refunded";
+    public static final String BOOKING_HAS_USED_TICKET =
+            "A booking with a used ticket cannot be cancelled or refunded";
 }

@@ -1,18 +1,18 @@
 package com.tpe.cinetime.security;
 
+import com.tpe.cinetime.security.token.RefreshTokenStore;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
@@ -28,7 +28,7 @@ public class JwtUtils {
     @Value("${cinetime.app.refreshTokenExpirationMs}")
     private long refreshTokenExpirationMs;
 
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RefreshTokenStore refreshTokenStore;
 
     //String jwtSecret'i Key nesnesine çeviriyoruz (0.11+ zorunluluğu)
     private Key getSigningKey(){
@@ -113,16 +113,18 @@ public class JwtUtils {
                 .compact();
 
         //Redis'e kaydet
-        saveRefreshTokenInRedis(userDetails.getId(), refreshToken);
+        saveRefreshToken(userDetails.getId(), refreshToken);
 
         return refreshToken;
     }
 
     //Redis'e kaydet -> key: "refreshToken:{userId}", TTL: 7 gün
-    public void saveRefreshTokenInRedis(Long userId, String refreshToken){
-        String redisKey = "refreshToken:user:" + userId;
-        redisTemplate.opsForValue().set(redisKey,refreshToken, refreshTokenExpirationMs, TimeUnit.MILLISECONDS);
-        log.info("Refresh token generated and saved in Redis. Key: {}", redisKey);
+    public void saveRefreshToken(Long userId, String refreshToken){
+        refreshTokenStore.save(
+                userId,
+                refreshToken,
+                Duration.ofMillis(refreshTokenExpirationMs));
+        log.info("Refresh token generated and stored for user ID: {}", userId);
     }
 
     //Refresh token validate
@@ -153,8 +155,7 @@ public class JwtUtils {
     //Redis'teki token ile gelen token'ın eşit olup olmadığını kontrol etme
     public boolean isRefreshTokenValid(Long userId, String refreshToken){
 
-        String redisKey = "refreshToken:user:" + userId;
-        String storedToken = redisTemplate.opsForValue().get(redisKey);
+        String storedToken = refreshTokenStore.find(userId).orElse(null);
 
         if(storedToken == null){
             log.warn("No refresh token found in Redis for user ID: {}", userId);
@@ -176,8 +177,7 @@ public class JwtUtils {
 
     //Logout: Redis'ten refresh token sil
     public void deleteRefreshToken(Long userId){
-        String redisKey = "refreshToken:user:" + userId;
-        redisTemplate.delete(redisKey);
-        log.info("Refresh token removed from Redis for user ID: {}", userId);
+        refreshTokenStore.delete(userId);
+        log.info("Refresh token removed for user ID: {}", userId);
     }
 }

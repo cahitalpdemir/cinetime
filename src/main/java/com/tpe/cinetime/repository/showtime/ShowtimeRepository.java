@@ -7,12 +7,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.QueryHints;
 
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints(@QueryHint(name = "javax.persistence.lock.timeout", value = "5000"))
+    @Query("SELECT s FROM Showtime s WHERE s.id = :id")
+    Optional<Showtime> findByIdForUpdate(@Param("id") Long id);
 
     // Derived queries avoid PostgreSQL null-parameter type errors from (:param IS NULL OR ...) JPQL patterns.
     List<Showtime> findByStatus(ShowtimeStatus status);

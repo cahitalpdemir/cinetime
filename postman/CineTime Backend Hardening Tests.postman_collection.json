@@ -1,0 +1,1552 @@
+{
+    "info":  {
+                 "_postman_id":  "683cc08a-efae-4116-9b05-53f470fbda52",
+                 "name":  "CineTime Backend Hardening Tests",
+                 "description":  "CineTime backend current MVP Postman collection. Covers Auth, Movie, Cinema, Hall/Seat, Showtime, Booking, Mock Payment, Ticket and key negative tests.",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+                 "_exporter_id":  "42440830",
+                 "_collection_link":  "https://go.postman.co/collection/42440830-683cc08a-efae-4116-9b05-53f470fbda52?source=collection_link"
+             },
+    "item":  [
+                 {
+                     "name":  "00 Health",
+                     "item":  [
+                                  {
+                                      "name":  "OpenAPI JSON",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"OpenAPI JSON is available\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/v3/api-docs",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "v3",
+                                                                               "api-docs"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "01 Auth",
+                     "item":  [
+                                  {
+                                      "name":  "Admin Login",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Admin login successful\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const token = json.token || json.accessToken || json.object?.token || json.object?.accessToken;",
+                                                                                    "",
+                                                                                    "pm.test(\"Admin token exists\", function () {",
+                                                                                    "    pm.expect(token).to.not.be.undefined;",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "if (token) {",
+                                                                                    "    pm.environment.set(\"adminToken\", token);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/auth/login",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "auth",
+                                                                               "login"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Customer Register",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Customer register returns success or already-exists style error\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 409]);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Serkan\",\n  \"surname\": \"Customer\",\n  \"email\": \"{{customerEmail}}\",\n  \"phoneNumber\": \"(555) 111-2233\",\n  \"birthDate\": \"1995-05-20\",\n  \"gender\": \"MALE\",\n  \"password\": \"{{customerPassword}}\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/auth/register",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "auth",
+                                                                               "register"
+                                                                           ]
+                                                              },
+                                                      "description":  "If customer already exists, skip this request and run Customer Login."
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Customer Login",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Customer login successful\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const token = json.token || json.accessToken || json.object?.token || json.object?.accessToken;",
+                                                                                    "",
+                                                                                    "pm.test(\"Customer token exists\", function () {",
+                                                                                    "    pm.expect(token).to.not.be.undefined;",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "if (token) {",
+                                                                                    "    pm.environment.set(\"customerToken\", token);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"email\": \"{{customerEmail}}\",\n  \"password\": \"{{customerPassword}}\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/auth/login",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "auth",
+                                                                               "login"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "02 Movie",
+                     "item":  [
+                                  {
+                                      "name":  "Create Movie",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Movie created\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const movie = json.object || json;",
+                                                                                    "const id = movie.id || movie.movieId;",
+                                                                                    "if (id) {",
+                                                                                    "    pm.environment.set(\"movieId\", id);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"title\": \"Dune Part Two\",\n  \"summary\": \"Paul Atreides unites with Chani and the Fremen while seeking revenge.\",\n  \"releaseDate\": \"2026-07-01\",\n  \"duration\": 166,\n  \"director\": \"Denis Villeneuve\",\n  \"cast\": [\"Timothee Chalamet\", \"Zendaya\"],\n  \"formats\": [\"IMAX\", \"2D\"],\n  \"genre\": \"Sci-Fi\",\n  \"status\": \"COMING_SOON\",\n  \"specialHalls\": \"IMAX\",\n  \"rating\": 8.6\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/movies",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "movies"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Movies",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Movies fetched\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/movies",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "movies"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Movie Detail",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Movie detail fetched\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/movies/{{movieId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "movies",
+                                                                               "{{movieId}}"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Coming Soon Movies",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/movies/coming-soon",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "movies",
+                                                                               "coming-soon"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Now Showing Movies",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/movies/now-showing",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "movies",
+                                                                               "now-showing"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "03 Cinema Hall Seat",
+                     "item":  [
+                                  {
+                                      "name":  "Create Cinema",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Cinema created\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const cinema = json.object || json;",
+                                                                                    "const id = cinema.id || cinema.cinemaId;",
+                                                                                    "if (id) {",
+                                                                                    "    pm.environment.set(\"cinemaId\", id);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"CineTime Kadikoy\",\n  \"city\": \"Istanbul\",\n  \"district\": \"Kadikoy\",\n  \"address\": \"Bahariye Cd. No:1 Kadikoy Istanbul\",\n  \"phone\": \"+902161112233\",\n  \"latitude\": 40.9900,\n  \"longitude\": 29.0300\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/admin/cinemas",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "admin",
+                                                                               "cinemas"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Cinemas",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/cinemas",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "cinemas"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Cinema Detail",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/cinemas/{{cinemaId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "cinemas",
+                                                                               "{{cinemaId}}"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Create Hall",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Hall created\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "let id;",
+                                                                                    "try {",
+                                                                                    "    const json = pm.response.json();",
+                                                                                    "    const hall = json.object || json;",
+                                                                                    "    id = hall.id || hall.hallId;",
+                                                                                    "} catch (e) {}",
+                                                                                    "",
+                                                                                    "if (id) {",
+                                                                                    "    pm.environment.set(\"hallId\", id);",
+                                                                                    "} else if (!pm.environment.get(\"hallId\")) {",
+                                                                                    "    pm.environment.set(\"hallId\", \"1\");",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"cinemaId\": {{cinemaId}},\n  \"name\": \"Salon 1\",\n  \"hallType\": \"IMAX\",\n  \"rows\": 5,\n  \"seatsPerRow\": 8\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/admin/halls",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "admin",
+                                                                               "halls"
+                                                                           ]
+                                                              },
+                                                      "description":  "Current backend may not return hallId. If response has no id, collection defaults hallId to 1."
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "04 Showtime",
+                     "item":  [
+                                  {
+                                      "name":  "Create Showtime",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Showtime created\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const showtime = json.object || json;",
+                                                                                    "const id = showtime.id || showtime.showtimeId;",
+                                                                                    "if (id) {",
+                                                                                    "    pm.environment.set(\"showtimeId\", id);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"movieId\": {{movieId}},\n  \"hallId\": {{hallId}},\n  \"date\": \"2026-07-20\",\n  \"startTime\": \"20:30\",\n  \"language\": \"TR Dublaj\",\n  \"format\": \"IMAX\",\n  \"price\": 250.00\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/admin/showtimes",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "admin",
+                                                                               "showtimes"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Showtimes",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/showtimes",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "showtimes"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Filter Showtimes By Movie",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/showtimes?movieId={{movieId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "showtimes"
+                                                                           ],
+                                                                  "query":  [
+                                                                                {
+                                                                                    "key":  "movieId",
+                                                                                    "value":  "{{movieId}}"
+                                                                                }
+                                                                            ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Filter Showtimes By Hall",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/showtimes?hallId={{hallId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "showtimes"
+                                                                           ],
+                                                                  "query":  [
+                                                                                {
+                                                                                    "key":  "hallId",
+                                                                                    "value":  "{{hallId}}"
+                                                                                }
+                                                                            ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Filter Showtimes By Date",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/showtimes?date=2026-07-20",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "showtimes"
+                                                                           ],
+                                                                  "query":  [
+                                                                                {
+                                                                                    "key":  "date",
+                                                                                    "value":  "2026-07-20"
+                                                                                }
+                                                                            ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Showtime Seats",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Seats fetched\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const seats = json.object || [];",
+                                                                                    "const availableSeats = seats.filter(seat =\u003e seat.isBooked === false || seat.booked === false || seat.isBooked === undefined);",
+                                                                                    "",
+                                                                                    "pm.test(\"At least two seats are available\", function () {",
+                                                                                    "    pm.expect(availableSeats.length).to.be.greaterThan(1);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "if (availableSeats.length \u003e 1) {",
+                                                                                    "    pm.environment.set(\"seatId1\", availableSeats[0].seatId || availableSeats[0].id);",
+                                                                                    "    pm.environment.set(\"seatId2\", availableSeats[1].seatId || availableSeats[1].id);",
+                                                                                    "}",
+                                                                                    "if (availableSeats.length \u003e 3) {",
+                                                                                    "    pm.environment.set(\"seatId3\", availableSeats[2].seatId || availableSeats[2].id);",
+                                                                                    "    pm.environment.set(\"seatId4\", availableSeats[3].seatId || availableSeats[3].id);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/showtimes/{{showtimeId}}/seats",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "showtimes",
+                                                                               "{{showtimeId}}",
+                                                                               "seats"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "05 Booking Payment Ticket",
+                     "item":  [
+                                  {
+                                      "name":  "Create Booking",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Booking created\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const booking = json.object || json;",
+                                                                                    "const id = booking.id || booking.bookingId;",
+                                                                                    "",
+                                                                                    "pm.test(\"Booking id exists\", function () {",
+                                                                                    "    pm.expect(id).to.not.be.undefined;",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "if (id) {",
+                                                                                    "    pm.environment.set(\"bookingId\", id);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [{{seatId1}}, {{seatId2}}]\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/bookings",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "bookings"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Customer Bookings",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/bookings",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "bookings"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Booking Detail",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/bookings/{{bookingId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "bookings",
+                                                                               "{{bookingId}}"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Mock Payment",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Payment completed\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const payment = json.object || json;",
+                                                                                    "pm.test(\"Payment status is completed\", function () {",
+                                                                                    "    pm.expect(payment.status).to.eql(\"COMPLETED\");",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"cardNumber\": \"4242424242424242\",\n  \"cardHolderName\": \"Serkan Customer\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/bookings/{{bookingId}}/payment",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "bookings",
+                                                                               "{{bookingId}}",
+                                                                               "payment"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Tickets By Booking",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Tickets fetched\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "const tickets = json.object || [];",
+                                                                                    "const ticketNumber = tickets[0]?.ticketNumber;",
+                                                                                    "",
+                                                                                    "pm.test(\"Ticket number exists\", function () {",
+                                                                                    "    pm.expect(ticketNumber).to.not.be.undefined;",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "if (ticketNumber) {",
+                                                                                    "    pm.environment.set(\"ticketNumber\", ticketNumber);",
+                                                                                    "}",
+                                                                                    "",
+                                                                                    "const firstTicket = tickets[0];",
+                                                                                    "if (firstTicket?.qrCode) {",
+                                                                                    "    pm.environment.set(\"ticketQrCode\", firstTicket.qrCode);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/bookings/{{bookingId}}/tickets",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "bookings",
+                                                                               "{{bookingId}}",
+                                                                               "tickets"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Ticket Detail",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Ticket detail fetched\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/tickets/{{ticketNumber}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "tickets",
+                                                                               "{{ticketNumber}}"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Verify Signed Ticket QR",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Signed ticket verified\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "    pm.expect(pm.response.json().object.valid).to.eql(true);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"qrCode\": \"{{ticketQrCode}}\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/admin/tickets/verify"
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "06 Negative Tests",
+                     "item":  [
+                                  {
+                                      "name":  "Create Movie Without Token",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Unauthorized movie create is blocked\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"title\": \"Unauthorized Movie\",\n  \"summary\": \"Should fail without token\",\n  \"releaseDate\": \"2026-07-01\",\n  \"duration\": 120,\n  \"director\": \"Test Director\",\n  \"cast\": [\"Actor\"],\n  \"formats\": [\"2D\"],\n  \"genre\": \"Drama\",\n  \"status\": \"COMING_SOON\",\n  \"rating\": 7.0\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/movies",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "movies"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Create Showtime Without Token",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Unauthorized showtime create is blocked\", function () {",
+                                                                                    "    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"movieId\": {{movieId}},\n  \"hallId\": {{hallId}},\n  \"date\": \"2026-07-20\",\n  \"startTime\": \"20:30\",\n  \"language\": \"TR Dublaj\",\n  \"format\": \"IMAX\",\n  \"price\": 250.00\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/admin/showtimes",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "admin",
+                                                                               "showtimes"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Create Past Showtime",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Past showtime is rejected\", function () {",
+                                                                                    "    pm.response.to.have.status(400);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"movieId\": {{movieId}},\n  \"hallId\": {{hallId}},\n  \"date\": \"2020-01-01\",\n  \"startTime\": \"20:30\",\n  \"language\": \"TR Dublaj\",\n  \"format\": \"IMAX\",\n  \"price\": 250.00\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/admin/showtimes",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "admin",
+                                                                               "showtimes"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Duplicate Seat Booking",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Duplicate seat booking is rejected\", function () {",
+                                                                                    "    pm.response.to.have.status(400);",
+                                                                                    "});",
+                                                                                    "",
+                                                                                    "const json = pm.response.json();",
+                                                                                    "pm.test(\"Duplicate seat message exists\", function () {",
+                                                                                    "    pm.expect(json.message || JSON.stringify(json)).to.include(\"seat\");",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [{{seatId1}}, {{seatId2}}]\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/customer/bookings",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "customer",
+                                                                               "bookings"
+                                                                           ]
+                                                              }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Cancel Confirmed Booking And Refund",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Confirmed booking refunded\", function () {",
+                                                                                    "    pm.response.to.have.status(200);",
+                                                                                    "    const booking = pm.response.json().object;",
+                                                                                    "    pm.expect(booking.status).to.eql(\"CANCELLED\");",
+                                                                                    "    pm.expect(booking.payment.status).to.eql(\"REFUNDED\");",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{customerToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/customer/bookings/{{bookingId}}/cancel"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Reject Cancelled Ticket QR",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "pm.test(\"Cancelled QR rejected\", function () {",
+                                                                                    "    pm.response.to.have.status(400);",
+                                                                                    "});"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"qrCode\": \"{{ticketQrCode}}\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "auth":  {
+                                                                   "type":  "bearer",
+                                                                   "bearer":  [
+                                                                                  {
+                                                                                      "key":  "token",
+                                                                                      "value":  "{{adminToken}}",
+                                                                                      "type":  "string"
+                                                                                  }
+                                                                              ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/admin/tickets/verify"
+                                                  }
+                                  }
+                              ]
+                 }
+             ],
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "http://localhost:8081"
+                     },
+                     {
+                         "key":  "adminEmail",
+                         "value":  "admin@cinetime.com"
+                     },
+                     {
+                         "key":  "adminPassword",
+                         "value":  "ChangeMe123!"
+                     },
+                     {
+                         "key":  "customerEmail",
+                         "value":  "customer@cinetime.com"
+                     },
+                     {
+                         "key":  "customerPassword",
+                         "value":  "Customer123"
+                     },
+                     {
+                         "key":  "ticketQrCode",
+                         "value":  ""
+                     }
+                 ]
+}
