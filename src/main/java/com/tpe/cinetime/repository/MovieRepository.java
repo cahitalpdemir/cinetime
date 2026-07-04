@@ -2,6 +2,7 @@ package com.tpe.cinetime.repository;
 
 
 import com.tpe.cinetime.entity.Movie;
+import com.tpe.cinetime.enums.MovieStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,13 +19,13 @@ public interface MovieRepository extends JpaRepository<com.tpe.cinetime.entity.M
 
     boolean existsBySlug(String slug);
 
-    Page<Movie> findByStatus(Integer status, Pageable pageable);
+    Page<Movie> findByStatus(MovieStatus status, Pageable pageable);
 
     @Query("SELECT m FROM Movie m WHERE " +
             "LOWER(m.title) LIKE LOWER(CONCAT('%', :q, '%')) OR " +
             "LOWER(m.summary) LIKE LOWER(CONCAT('%', :q, '%'))")
     Page<Movie> search(@Param("q") String query, Pageable pageable);
 
-//    @Query("SELECT m FROM Movie m WHERE m.specialHalls LIKE CONCAT('%', :hall, '%')")
-//    Page<Movie> findBySpecialHall(@Param("hall") String hall, Pageable pageable);
+    @Query("SELECT m FROM Movie m WHERE m.specialHalls LIKE CONCAT('%', :hall, '%')")
+    Page<Movie> findBySpecialHall(@Param("hall") String hall, Pageable pageable);
 }

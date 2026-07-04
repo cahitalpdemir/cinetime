@@ -4,7 +4,9 @@ package com.tpe.cinetime.controller;
 
 import com.tpe.cinetime.payload.request.MovieRequest;
 import com.tpe.cinetime.payload.response.MovieResponse;
+import com.tpe.cinetime.payload.response.showtime.ShowtimeResponse;
 import com.tpe.cinetime.service.MovieService;
+import com.tpe.cinetime.service.showtime.ShowtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +26,8 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-//    @Autowired
-//    private ShowtimeService showtimeService;
+    @Autowired
+    private ShowtimeService showtimeService;
 
     // M01 & M08 - Get all movies with search
     @GetMapping
@@ -46,18 +48,18 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getMovieBySlug(slug));
     }
 
-//    // M03 - Get movies by special hall
-//    @GetMapping("/hall/{hall}")
-//    public ResponseEntity<Page<MovieResponse>> getMoviesByHall(
-//            @PathVariable String hall,
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size,
-//            @RequestParam(defaultValue = "title") String sort,
-//            @RequestParam(defaultValue = "asc") String type) {
-//        Pageable pageable = PageRequest.of(page, size,
-//                type.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
-//        return ResponseEntity.ok(movieService.getMoviesBySpecialHall(hall, pageable));
-//    }
+    // M03 - Get movies by special hall
+    @GetMapping("/hall/{hall}")
+    public ResponseEntity<Page<MovieResponse>> getMoviesByHall(
+            @PathVariable String hall,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "title") String sort,
+            @RequestParam(defaultValue = "asc") String type) {
+        Pageable pageable = PageRequest.of(page, size,
+                type.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
+        return ResponseEntity.ok(movieService.getMoviesBySpecialHall(hall, pageable));
+    }
 
     // M04 - Get movies in theaters
     @GetMapping("/in-theaters")
@@ -83,17 +85,17 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getMoviesComingSoon(pageable));
     }
 
-//    // Pre-sale (status = 2)
-//    @GetMapping("/presale")
-//    public ResponseEntity<Page<MovieResponse>> getMoviesPresale(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size,
-//            @RequestParam(defaultValue = "title") String sort,
-//            @RequestParam(defaultValue = "asc") String type) {
-//        Pageable pageable = PageRequest.of(page, size,
-//                type.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
-//        return ResponseEntity.ok(movieService.getMoviesPresale(pageable));
-//    }
+    // M06 - Get archived movies
+    @GetMapping("/archived")
+    public ResponseEntity<Page<MovieResponse>> getMoviesArchived(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "title") String sort,
+            @RequestParam(defaultValue = "asc") String type) {
+        Pageable pageable = PageRequest.of(page, size,
+                type.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
+        return ResponseEntity.ok(movieService.getMoviesArchived(pageable));
+    }
 
     // M09 - Get movie by id
     @GetMapping("/{id}")
@@ -131,8 +133,8 @@ public class MovieController {
     }
 
     // M14 - Get showtimes for movie
-//    @GetMapping("/{id}/show-times")
-//    public ResponseEntity<List<ShowtimeResponse>> getMovieShowtimes(@PathVariable Long id) {
-//        return ResponseEntity.ok(showtimeService.getUpcomingShowtimesByMovieId(id));
-//    }
+    @GetMapping("/{id}/show-times")
+    public ResponseEntity<List<ShowtimeResponse>> getMovieShowtimes(@PathVariable Long id) {
+        return ResponseEntity.ok(showtimeService.getUpcomingShowtimesByMovieId(id));
+    }
 }

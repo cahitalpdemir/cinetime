@@ -11,12 +11,12 @@ import java.util.Map;
 public class CinetimeApplication {
 
 	public static void main(String[] args) {
-
+     // .env dosyasını okuma
 		Dotenv dotenv = Dotenv.configure()
 				.directory(System.getProperty("user.dir"))
 				.ignoreIfMissing()
 				.load();
-
+     // .env dosyasındaki değerleri sistem özelliklerine ekleme
 		Map<String, Object> envProperties = new HashMap<>();
 		dotenv.entries().forEach(entry -> {
 			envProperties.put(entry.getKey(), entry.getValue());

@@ -1,5 +1,6 @@
 package com.tpe.cinetime.entity;
 
+import com.tpe.cinetime.enums.MovieStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,8 +30,8 @@ public class Movie {
     private String title;
 
     @NotNull
-    @Size(min = 5, max = 20)
-    @Column(nullable = false, unique = true, length = 20)
+    @Size(min = 5, max = 150)
+    @Column(nullable = false, unique = true, length = 150)
     private String slug;
 
     @NotNull
@@ -72,9 +73,11 @@ public class Movie {
 //    @JoinColumn(name = "poster_id")
 //    private Image poster;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private Integer status = 0;
+    private MovieStatus status = MovieStatus.COMING_SOON;
 
     private String specialHalls;
 

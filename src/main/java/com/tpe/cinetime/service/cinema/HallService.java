@@ -6,6 +6,7 @@ import com.tpe.cinetime.entity.Hall;
 import com.tpe.cinetime.entity.Seat;
 import com.tpe.cinetime.enums.SeatType;
 import com.tpe.cinetime.payload.request.cinema.HallRequestDTO;
+import com.tpe.cinetime.payload.response.cinema.HallResponseDTO;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.repository.cinema.HallRepository;
 import com.tpe.cinetime.repository.cinema.SeatRepository;
@@ -26,7 +27,7 @@ public class HallService {
     private final CinemaService cinemaService;
 
     @Transactional
-    public ResponseMessage<Void> saveHall(HallRequestDTO hallRequestDTO) {
+    public ResponseMessage<HallResponseDTO> saveHall(HallRequestDTO hallRequestDTO) {
         Cinema cinema = cinemaService.getCinemaEntityById(hallRequestDTO.getCinemaId());
 
         Hall hall = Hall.builder()
@@ -40,15 +41,24 @@ public class HallService {
         Hall savedHall = hallRepository.save(hall);
 
         // T11: rows x seatsPerRow formülüyle Seat kayıtlarını otomatik üret
-        generateSeats(savedHall);
+        int seatCount = generateSeats(savedHall);
 
-        return ResponseMessage.<Void>builder()
+        HallResponseDTO response = HallResponseDTO.builder()
+                .id(savedHall.getId())
+                .name(savedHall.getName())
+                .cinemaId(cinema.getId())
+                .capacity(savedHall.getRows() * savedHall.getSeatsPerRow())
+                .createdSeatCount(seatCount)
+                .build();
+
+        return ResponseMessage.<HallResponseDTO>builder()
+                .object(response)
                 .message(SuccessMessages.HALL_SAVED_SUCCESSFULLY)
                 .httpStatus(HttpStatus.CREATED)
                 .build();
     }
 
-    private void generateSeats(Hall hall) {
+    private int generateSeats(Hall hall) {
         List<Seat> seats = new ArrayList<>();
         int rows = hall.getRows();
         int seatsPerRow = hall.getSeatsPerRow();
@@ -66,5 +76,6 @@ public class HallService {
             }
         }
         seatRepository.saveAll(seats);
+        return seats.size();
     }
 }
