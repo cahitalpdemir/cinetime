@@ -28,6 +28,9 @@ The API runs at `http://localhost:8081`.
 
 Swagger UI: `http://localhost:8081/swagger-ui.html`
 
+The default secure profile allows browser requests from `http://localhost:3000`.
+Set `CORS_ALLOWED_ORIGINS` to a comma-separated list when another frontend URL is used.
+
 ## Tests
 
 Tests use an in-memory H2 database and do not modify the local PostgreSQL database.
@@ -70,6 +73,8 @@ Real secrets must not be committed. Local defaults are development-only values.
 | `REDIS_SSL` | Enable Redis TLS |
 | `MAIL_FROM` | Sender email address |
 | `FRONTEND_URL` | Frontend base URL for password reset links |
+| `CORS_ALLOWED_ORIGINS` | Browser origins allowed to call the API |
+| `SPRING_PROFILES_ACTIVE` | Runtime profile; defaults to secure `prod` |
 
 ## Git Hygiene
 
