@@ -31,7 +31,8 @@ public class AuthController {
             RegisterRequestDTO registerRequestDTO){
 
 
-        return ResponseEntity.ok(authService.register(registerRequestDTO));
+        ResponseMessage<UserResponseDTO> response = authService.register(registerRequestDTO);
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
     @PostMapping("/login")

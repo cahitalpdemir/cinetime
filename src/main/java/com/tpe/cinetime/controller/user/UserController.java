@@ -9,7 +9,6 @@ import com.tpe.cinetime.service.user.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +40,6 @@ public class UserController {
     public ResponseEntity<ResponseMessage<?>> updatePassword(
             @Valid
             @RequestBody
-            @AuthenticationPrincipal
             UserUpdatePasswordRequestDTO userUpdatePasswordRequestDTO) {
 
         return ResponseEntity.ok(userService.updatePassword(userUpdatePasswordRequestDTO));

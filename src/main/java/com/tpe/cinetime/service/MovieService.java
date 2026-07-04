@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 @Service
+@Transactional(readOnly = true)
 public class MovieService {
 
     @Autowired

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -27,14 +29,16 @@ public class AdminCinemaController {
     // POST /admin/cinemas
     @PostMapping("/cinemas")
     public ResponseEntity<ResponseMessage<CinemaResponseDTO>> saveCinema(
-            @RequestBody CinemaRequestDTO cinemaRequestDTO) {
-        return ResponseEntity.ok(cinemaService.saveCinema(cinemaRequestDTO));
+            @Valid @RequestBody CinemaRequestDTO cinemaRequestDTO) {
+        ResponseMessage<CinemaResponseDTO> response = cinemaService.saveCinema(cinemaRequestDTO);
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
     // POST /admin/halls
     @PostMapping("/halls")
     public ResponseEntity<ResponseMessage<HallResponseDTO>> saveHall(
-            @RequestBody HallRequestDTO hallRequestDTO) {
-        return ResponseEntity.ok(hallService.saveHall(hallRequestDTO));
+            @Valid @RequestBody HallRequestDTO hallRequestDTO) {
+        ResponseMessage<HallResponseDTO> response = hallService.saveHall(hallRequestDTO);
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 }

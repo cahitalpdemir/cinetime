@@ -96,17 +96,9 @@ public class MethodHelper {
 
         RoleName newRoleName = adminUserUpdateRequestDTO.getRole();
 
-        System.out.println("newRoleName: " + newRoleName);
-        System.out.println("currentUser role: " + currentUser.getRole().getRoleName());
-
-
         if (newRoleName == null){
             return;
         }
-
-        System.out.println("newRoleName: " + newRoleName);
-        System.out.println("currentUser role: " + currentUser.getRole().getRoleName());
-
 
         if (!currentUser.getRole().getRoleName().equals(RoleName.ADMIN)) {
             throw new BadRequestException(ErrorMessages.ONLY_ADMIN_CAN_UPDATE_ROLE);

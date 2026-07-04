@@ -21,6 +21,7 @@ import com.tpe.cinetime.repository.showtime.ShowtimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ShowtimeService {
 
     private final ShowtimeRepository showtimeRepository;
@@ -39,6 +41,7 @@ public class ShowtimeService {
     private final ShowtimeMapper showtimeMapper;
 
     //create a new showtime, validates past datetime and hall conflicts
+    @Transactional
     public ResponseMessage<ShowtimeResponse> createShowtime(ShowtimeRequest request) {
 
 // combine date and startTime-only checking date is not enough
@@ -86,6 +89,7 @@ public class ShowtimeService {
     }
 
     //cancel a showtime — only active showtimes can be cancelled
+    @Transactional
     public ResponseMessage<ShowtimeResponse> cancelShowtime(Long id) {
         Showtime showtime = getShowtimeById(id);
 

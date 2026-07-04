@@ -6,7 +6,6 @@ import com.tpe.cinetime.constants.messages.ErrorMessages;
 import com.tpe.cinetime.exception.EmailSendException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,8 +17,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import static org.hibernate.type.LocalTimeType.FORMATTER;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +43,7 @@ public class EmailService {
     @Async("emailTaskExecutor")
     public void sendPasswordChangedEmail(String toEmail) {
 
-        String changedAt = LocalDateTime.now().format(FORMATTER);
+        String changedAt = LocalDateTime.now().format(DATE_TIME_FORMATTER);
         String body = EmailConstants.PASSWORD_CHANGED_BODY_HTML.formatted(changedAt);
 
         sendHtmlEmail(toEmail, EmailConstants.PASSWORD_CHANGED_SUBJECT, body);

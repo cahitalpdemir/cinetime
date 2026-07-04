@@ -12,6 +12,7 @@ import com.tpe.cinetime.service.booking.TicketService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +31,7 @@ public class BookingController {
     @PostMapping("/bookings")
     public ResponseEntity<ResponseMessage<BookingResponse>> createBooking(
             @Valid @RequestBody BookingRequest request) {
-        return ResponseEntity.status(201).body(bookingService.createBooking(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.createBooking(request));
     }
 
     @GetMapping("/bookings")

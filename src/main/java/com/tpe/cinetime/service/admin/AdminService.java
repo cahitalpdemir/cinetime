@@ -19,10 +19,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdminService {
 
     private final UserRepository userRepository;
@@ -62,6 +64,7 @@ public class AdminService {
                 .build();
     }
 
+    @Transactional
     public ResponseMessage<UserResponseDTO> updateUserById(
             Long userId,AdminUserUpdateRequestDTO adminUserUpdateRequestDTO) {
 
@@ -88,6 +91,7 @@ public class AdminService {
                 .build();
     }
 
+    @Transactional
     public ResponseMessage<?> deleteUserById(Long userId) {
 
         User user = methodHelper.getUserById(userId);

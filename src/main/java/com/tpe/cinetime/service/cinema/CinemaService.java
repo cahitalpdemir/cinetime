@@ -13,17 +13,20 @@ import com.tpe.cinetime.repository.cinema.CinemaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CinemaService {
 
     private final CinemaRepository cinemaRepository;
     private final CinemaMapper cinemaMapper;
 
+    @Transactional
     public ResponseMessage<CinemaResponseDTO> saveCinema(CinemaRequestDTO cinemaRequestDTO) {
         if (cinemaRepository.existsByPhone(cinemaRequestDTO.getPhone())) {
             throw new BadRequestException(ErrorMessages.CINEMA_PHONE_ALREADY_EXISTS);

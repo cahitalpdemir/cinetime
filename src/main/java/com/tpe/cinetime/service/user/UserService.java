@@ -19,11 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
@@ -49,6 +50,7 @@ public class UserService {
     }
 
 
+    @Transactional
     public ResponseMessage<UserResponseDTO> updateAccountDetails(
             UserUpdateWithoutPasswordRequestDTO userUpdateWithPasswordRequestDTO) {
 
@@ -102,6 +104,7 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public ResponseMessage<?> deleteAccount() {
 
         User user = methodHelper.currentUser();

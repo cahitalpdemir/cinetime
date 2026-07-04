@@ -4,10 +4,7 @@ package com.tpe.cinetime.payload.request;
 import com.tpe.cinetime.enums.MovieStatus;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,6 +26,7 @@ public class MovieRequest {
     private LocalDate releaseDate;
 
     @NotNull
+    @Positive(message = "Duration must be greater than zero")
     private Integer duration;
 
     @NotBlank
@@ -47,5 +45,7 @@ public class MovieRequest {
 
     private String specialHalls;
 
+    @DecimalMin(value = "0.0", message = "Rating must be at least 0")
+    @DecimalMax(value = "10.0", message = "Rating must be at most 10")
     private Double rating;
 }

@@ -31,6 +31,14 @@ public final class SuccessMessages {
     //Hall
     public static final String HALL_SAVED_SUCCESSFULLY = "Hall saved successfully";
 
+    // Movie
+    public static final String MOVIES_FETCHED_SUCCESSFULLY = "Movies fetched successfully";
+    public static final String MOVIE_FETCHED_SUCCESSFULLY = "Movie fetched successfully";
+    public static final String MOVIE_CREATED_SUCCESSFULLY = "Movie created successfully";
+    public static final String MOVIE_UPDATED_SUCCESSFULLY = "Movie updated successfully";
+    public static final String MOVIE_DELETED_SUCCESSFULLY = "Movie deleted successfully";
+    public static final String MOVIE_SHOWTIMES_FETCHED_SUCCESSFULLY = "Movie showtimes fetched successfully";
+
     //Showtime
     public static final String SHOWTIME_CREATED_SUCCESSFULLY = "Showtime created successfully";
     public static final String SHOWTIME_CANCELLED_SUCCESSFULLY = "Showtime cancelled successfully";
