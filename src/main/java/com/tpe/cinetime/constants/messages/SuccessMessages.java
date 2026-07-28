@@ -30,6 +30,7 @@ public final class SuccessMessages {
 
     //Hall
     public static final String HALL_SAVED_SUCCESSFULLY = "Hall saved successfully";
+    public static final String HALLS_FETCHED_SUCCESSFULLY = "Halls fetched successfully";
 
     // Movie
     public static final String MOVIES_FETCHED_SUCCESSFULLY = "Movies fetched successfully";

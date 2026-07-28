@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,21 +41,42 @@ public class HallService {
 
         Hall savedHall = hallRepository.save(hall);
 
-        // T11: rows x seatsPerRow formülüyle Seat kayıtlarını otomatik üret
+        // T11: rows x seatsPerRow formuluyla Seat kayitlarini otomatik uret
         int seatCount = generateSeats(savedHall);
 
-        HallResponseDTO response = HallResponseDTO.builder()
-                .id(savedHall.getId())
-                .name(savedHall.getName())
-                .cinemaId(cinema.getId())
-                .capacity(savedHall.getRows() * savedHall.getSeatsPerRow())
-                .createdSeatCount(seatCount)
-                .build();
+        HallResponseDTO response = mapHallToResponse(savedHall, seatCount);
 
         return ResponseMessage.<HallResponseDTO>builder()
                 .object(response)
                 .message(SuccessMessages.HALL_SAVED_SUCCESSFULLY)
                 .httpStatus(HttpStatus.CREATED)
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseMessage<List<HallResponseDTO>> getHallsByCinemaId(Long cinemaId) {
+        cinemaService.getCinemaEntityById(cinemaId);
+
+        List<HallResponseDTO> halls = hallRepository.findByCinema_IdOrderByNameAsc(cinemaId)
+                .stream()
+                .map(hall -> mapHallToResponse(hall, hall.getRows() * hall.getSeatsPerRow()))
+                .collect(Collectors.toList());
+
+        return ResponseMessage.<List<HallResponseDTO>>builder()
+                .object(halls)
+                .message(SuccessMessages.HALLS_FETCHED_SUCCESSFULLY)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+    private HallResponseDTO mapHallToResponse(Hall hall, int seatCount) {
+        return HallResponseDTO.builder()
+                .id(hall.getId())
+                .name(hall.getName())
+                .hallType(hall.getHallType())
+                .cinemaId(hall.getCinema().getId())
+                .capacity(hall.getRows() * hall.getSeatsPerRow())
+                .createdSeatCount(seatCount)
                 .build();
     }
 
