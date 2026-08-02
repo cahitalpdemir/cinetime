@@ -3,6 +3,7 @@ package com.tpe.cinetime.payload.request;
 
 import com.tpe.cinetime.enums.MovieStatus;
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -40,6 +41,11 @@ public class MovieRequest {
 
     @NotBlank
     private String genre;
+
+    @Size(max = 500)
+    @URL(message = "Poster URL must be a valid URL")
+    @Pattern(regexp = "^https?://.+", message = "Poster URL must start with http:// or https://")
+    private String posterUrl;
 
     private MovieStatus status = MovieStatus.COMING_SOON;
 

@@ -69,6 +69,10 @@ public class Movie {
     @Column(nullable = false)
     private String genre;
 
+    @Size(max = 500)
+    @Column(name = "poster_url", length = 500)
+    private String posterUrl;
+
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "poster_id")
 //    private Image poster;

@@ -78,6 +78,7 @@ public class MovieService {
                 .cast(request.getCast())
                 .formats(request.getFormats())
                 .genre(request.getGenre())
+                .posterUrl(normalizeOptionalString(request.getPosterUrl()))
                 .status(request.getStatus() != null ? request.getStatus() : MovieStatus.COMING_SOON)
                 .specialHalls(request.getSpecialHalls())
                 .build();
@@ -100,6 +101,7 @@ public class MovieService {
         movie.setCast(request.getCast());
         movie.setFormats(request.getFormats());
         movie.setGenre(request.getGenre());
+        movie.setPosterUrl(normalizeOptionalString(request.getPosterUrl()));
         movie.setStatus(request.getStatus() != null ? request.getStatus() : movie.getStatus());
         movie.setSpecialHalls(request.getSpecialHalls());
 
@@ -115,8 +117,14 @@ public class MovieService {
         return response;
     }
 
-    private String generateSlug(String title) {
-        return title.toLowerCase(Locale.ENGLISH)
+    private String normalizeOptionalString(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        return value.trim();
+    }
+
+    private String generateSlug(String title) {        return title.toLowerCase(Locale.ENGLISH)
                 .replaceAll("[^a-z0-9\\s-]", "")
                 .replaceAll("\\s+", "-")
                 .replaceAll("-+", "-")
@@ -137,6 +145,7 @@ public class MovieService {
                 .formats(movie.getFormats() != null ? new ArrayList<>(movie.getFormats()) : null)
                 .genre(movie.getGenre())
 //                .posterId(movie.getPoster() != null ? movie.getPoster().getId() : null)
+                .posterUrl(movie.getPosterUrl())
                 .status(movie.getStatus())
                 .specialHalls(movie.getSpecialHalls())
                 .createdAt(movie.getCreatedAt())
