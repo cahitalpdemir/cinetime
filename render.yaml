@@ -5,7 +5,7 @@ services:
     plan: free
     region: frankfurt
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /actuator/health
+    healthCheckPath: /api/movies
     autoDeployTrigger: commit
     envVars:
       - key: SPRING_PROFILES_ACTIVE

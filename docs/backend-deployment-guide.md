@@ -30,8 +30,10 @@ Repo kok dizininde `render.yaml` bulunur. Render Dashboard uzerinden Blueprint o
 Health check path:
 
 ```text
-/actuator/health
+/api/movies
 ```
+
+Not: Production security aktifken Render health check token gonderemez. Bu nedenle health check, public ve DB baglantisini da yoklayan `GET /api/movies` endpointi uzerinden yapilir.
 
 Render Blueprint icinde otomatik uretilen veya baglanan degerler:
 
@@ -73,7 +75,7 @@ Not: Frontend henuz canli degilse `FRONTEND_URL` ve `CORS_ALLOWED_ORIGINS` gecic
 10. Health check sonucunu kontrol et:
 
 ```text
-https://cinetime-backend.onrender.com/actuator/health
+https://cinetime-backend.onrender.com/api/movies
 ```
 
 Beklenen cevap:
@@ -162,7 +164,7 @@ docker run --env-file .env -p 8081:8081 cinetime-backend
 
 Canli backend ayaga kalktiktan sonra sirayla kontrol et:
 
-1. `GET /actuator/health` -> `UP`
+1. `GET /api/movies` -> `200 OK`
 2. `POST /auth/login` admin token aliyor mu?
 3. `GET /api/movies` public calisiyor mu?
 4. `GET /cinemas` public calisiyor mu?
