@@ -1,0 +1,68 @@
+services:
+  - type: web
+    name: cinetime-backend
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_URL
+        fromDatabase:
+          name: cinetime-db
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: cinetime-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: cinetime-db
+          property: password
+      - key: REFRESH_TOKEN_STORE
+        value: redis
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: cinetime-redis
+          property: connectionString
+      - key: REDIS_HEALTH_ENABLED
+        value: "false"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: TICKET_QR_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: SWAGGER_UI_ENABLED
+        value: "false"
+      - key: API_DOCS_ENABLED
+        value: "false"
+      - key: BOOKING_CANCELLATION_CUTOFF_MINUTES
+        value: "120"
+      - key: MAIL_FROM
+        value: no-reply@cinetime.local
+
+  - type: keyvalue
+    name: cinetime-redis
+    plan: free
+    region: frankfurt
+    ipAllowList: []
+    maxmemoryPolicy: allkeys-lru
+
+databases:
+  - name: cinetime-db
+    plan: free
+    region: frankfurt
+    databaseName: cinetime
+    user: cinetime_user
+    postgresMajorVersion: "16"
