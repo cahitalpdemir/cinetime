@@ -1,6 +1,6 @@
 package com.tpe.cinetime.security.token;
 
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Component
-@Profile("postman")
+@ConditionalOnProperty(name = "app.refresh-token.store", havingValue = "memory")
 public class InMemoryRefreshTokenStore implements RefreshTokenStore {
 
     private final ConcurrentMap<Long, StoredToken> tokens = new ConcurrentHashMap<>();

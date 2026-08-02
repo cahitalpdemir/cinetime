@@ -1,7 +1,7 @@
 package com.tpe.cinetime.security.token;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.util.Optional;
 
 @Component
-@Profile("!postman")
+@ConditionalOnProperty(name = "app.refresh-token.store", havingValue = "redis", matchIfMissing = true)
 @RequiredArgsConstructor
 public class RedisRefreshTokenStore implements RefreshTokenStore {
 
