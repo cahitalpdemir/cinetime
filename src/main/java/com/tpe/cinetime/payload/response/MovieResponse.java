@@ -26,6 +26,7 @@ public class MovieResponse {
     private String genre;
     private Long posterId;
     private String posterUrl;
+    private String trailerUrl;
     private MovieStatus status;
     private String specialHalls;
     private LocalDateTime createdAt;
