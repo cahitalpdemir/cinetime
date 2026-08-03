@@ -7,4 +7,5 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
     boolean existsByPhone(String phone);
 
+    boolean existsByPhoneAndIdNot(String phone, Long id);
 }

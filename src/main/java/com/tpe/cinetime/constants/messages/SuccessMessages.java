@@ -27,10 +27,14 @@ public final class SuccessMessages {
     public static final String CINEMA_SAVED_SUCCESSFULLY = "Cinema saved successfully";
     public static final String CINEMA_FETCHED_SUCCESSFULLY = "Cinema fetched successfully";
     public static final String CINEMAS_FETCHED_SUCCESSFULLY = "Cinemas fetched successfully";
+    public static final String CINEMA_UPDATED_SUCCESSFULLY = "Cinema updated successfully";
+    public static final String CINEMA_DELETED_SUCCESSFULLY = "Cinema deleted successfully";
 
     //Hall
     public static final String HALL_SAVED_SUCCESSFULLY = "Hall saved successfully";
     public static final String HALLS_FETCHED_SUCCESSFULLY = "Halls fetched successfully";
+    public static final String HALL_UPDATED_SUCCESSFULLY = "Hall updated successfully";
+    public static final String HALL_DELETED_SUCCESSFULLY = "Hall deleted successfully";
 
     // Movie
     public static final String MOVIES_FETCHED_SUCCESSFULLY = "Movies fetched successfully";

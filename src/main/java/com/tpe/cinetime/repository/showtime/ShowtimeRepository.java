@@ -32,6 +32,8 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
 
     List<Showtime> findByHallIdAndStatus(Long hallId, ShowtimeStatus status);
 
+    boolean existsByHallId(Long hallId);
+
     List<Showtime> findByDateAndStatus(LocalDate date, ShowtimeStatus status);
 
     List<Showtime> findByMovieIdAndHallIdAndStatus(Long movieId, Long hallId, ShowtimeStatus status);
