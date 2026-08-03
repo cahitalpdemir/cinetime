@@ -79,6 +79,7 @@ public class MovieService {
                 .formats(request.getFormats())
                 .genre(request.getGenre())
                 .posterUrl(normalizeOptionalString(request.getPosterUrl()))
+                .trailerUrl(normalizeOptionalString(request.getTrailerUrl()))
                 .status(request.getStatus() != null ? request.getStatus() : MovieStatus.COMING_SOON)
                 .specialHalls(request.getSpecialHalls())
                 .build();
@@ -102,6 +103,7 @@ public class MovieService {
         movie.setFormats(request.getFormats());
         movie.setGenre(request.getGenre());
         movie.setPosterUrl(normalizeOptionalString(request.getPosterUrl()));
+        movie.setTrailerUrl(normalizeOptionalString(request.getTrailerUrl()));
         movie.setStatus(request.getStatus() != null ? request.getStatus() : movie.getStatus());
         movie.setSpecialHalls(request.getSpecialHalls());
 
@@ -146,6 +148,7 @@ public class MovieService {
                 .genre(movie.getGenre())
 //                .posterId(movie.getPoster() != null ? movie.getPoster().getId() : null)
                 .posterUrl(movie.getPosterUrl())
+                .trailerUrl(movie.getTrailerUrl())
                 .status(movie.getStatus())
                 .specialHalls(movie.getSpecialHalls())
                 .createdAt(movie.getCreatedAt())
