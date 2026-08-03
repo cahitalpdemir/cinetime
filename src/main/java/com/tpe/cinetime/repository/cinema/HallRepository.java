@@ -8,4 +8,6 @@ import java.util.List;
 public interface HallRepository extends JpaRepository<Hall, Long> {
 
     List<Hall> findByCinema_IdOrderByNameAsc(Long cinemaId);
+
+    boolean existsByCinema_Id(Long cinemaId);
 }

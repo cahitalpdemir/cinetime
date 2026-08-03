@@ -32,10 +32,12 @@ public final class ErrorMessages {
     //Cinema
     public static final String CINEMA_NOT_FOUND = "Cinema not found. Cinema id: %d";
     public static final String CINEMA_PHONE_ALREADY_EXISTS = "A cinema with this phone number already exists";
+    public static final String CINEMA_HAS_HALLS = "Cinema cannot be deleted while it has halls";
 
     //Hall
     public static final String CINEMA_NOT_FOUND_FOR_HALL = "Cinema not found for hall. Cinema id: %d";
     public static final String HALL_NOT_FOUND = "Hall not found. Hall id: %d";
+    public static final String HALL_HAS_SHOWTIMES = "Hall cannot be deleted or resized while it has showtimes";
 
     //Movie
     public static final String MOVIE_NOT_FOUND = "Movie not found. Movie id: %d";
@@ -52,6 +54,4 @@ public final class ErrorMessages {
     public static final String SHOWTIME_CANCELLATION_AFTER_START =
             "A showtime cannot be cancelled after it has started";
     public static final String SHOWTIME_IS_SOLD_OUT = "All seats are sold out for this showtime";
-
-
 }

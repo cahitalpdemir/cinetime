@@ -12,5 +12,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
 
     //returns all seat belonging to a hall
     List<Seat> findByHallId(Long hallId);
-}
 
+    void deleteByHallId(Long hallId);
+}
