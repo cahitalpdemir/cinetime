@@ -32,6 +32,8 @@ public class CinetimeApplication {
 
     private static void normalizeDatabaseUrl(Map<String, Object> envProperties) {
         String databaseUrl = firstText(
+                System.getProperty("spring.datasource.url"),
+                System.getenv("SPRING_DATASOURCE_URL"),
                 System.getProperty("DB_URL"),
                 System.getenv("DB_URL"),
                 System.getProperty("DATABASE_URL"),
@@ -44,13 +46,24 @@ public class CinetimeApplication {
 
         PostgresUrlProperties postgresUrlProperties = toJdbcPostgresUrl(databaseUrl);
         setProperty(envProperties, "DB_URL", postgresUrlProperties.jdbcUrl);
+        setProperty(envProperties, "spring.datasource.url", postgresUrlProperties.jdbcUrl);
 
         if (StringUtils.hasText(postgresUrlProperties.username) && !hasConfiguredValue("DB_USERNAME")) {
             setProperty(envProperties, "DB_USERNAME", postgresUrlProperties.username);
         }
 
+        if (StringUtils.hasText(postgresUrlProperties.username) && !hasConfiguredValue("spring.datasource.username")
+                && !StringUtils.hasText(System.getenv("SPRING_DATASOURCE_USERNAME"))) {
+            setProperty(envProperties, "spring.datasource.username", postgresUrlProperties.username);
+        }
+
         if (StringUtils.hasText(postgresUrlProperties.password) && !hasConfiguredValue("DB_PASSWORD")) {
             setProperty(envProperties, "DB_PASSWORD", postgresUrlProperties.password);
+        }
+
+        if (StringUtils.hasText(postgresUrlProperties.password) && !hasConfiguredValue("spring.datasource.password")
+                && !StringUtils.hasText(System.getenv("SPRING_DATASOURCE_PASSWORD"))) {
+            setProperty(envProperties, "spring.datasource.password", postgresUrlProperties.password);
         }
     }
 
