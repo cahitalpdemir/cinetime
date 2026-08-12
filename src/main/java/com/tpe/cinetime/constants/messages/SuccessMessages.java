@@ -45,4 +45,8 @@ public final class SuccessMessages {
     public static final String SHOWTIME_CANCELLED_SUCCESSFULLY = "Showtime cancelled successfully";
     public static final String SHOWTIMES_FETCHED_SUCCESSFULLY = "Showtimes fetched successfully";
     public static final String SHOWTIME_SEATS_FETCHED_SUCCESSFULLY = "Showtime seats fetched successfully";
+
+    //Seat Lock
+    public static final String SEATS_LOCKED_SUCCESSFULLY = "Seats locked successfully";
+    public static final String SEAT_LOCK_RELEASED_SUCCESSFULLY = "Seat lock released successfully";
 }

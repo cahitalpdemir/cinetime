@@ -1,5 +1,7 @@
 package com.tpe.cinetime.security;
 
+import com.tpe.cinetime.constants.messages.ErrorMessages;
+import com.tpe.cinetime.exception.UnauthorizedException;
 import com.tpe.cinetime.security.token.RefreshTokenStore;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -167,12 +169,18 @@ public class JwtUtils {
 
     //Get email from refresh token
     public String getEmailFromRefreshToken(String refreshToken) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(refreshToken)
-                .getBody()
-                .getSubject();
+
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(refreshToken)
+                    .getBody()
+                    .getSubject();
+        } catch (JwtException | IllegalArgumentException exception) {
+            log.warn("Invalid or expired refresh token: {}", exception.getMessage());
+            throw  new UnauthorizedException(ErrorMessages.INVALID_OR_EXPIRED_REFRESH_TOKEN);
+        }
     }
 
     //Logout: Redis'ten refresh token sil

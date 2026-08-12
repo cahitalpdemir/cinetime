@@ -5,7 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "booking_seats")
+@Table(
+        name = "booking_seats",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_booking_seat_showtime_seat",
+                        columnNames = {"showtime_id", "seat_id"}
+                )
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
