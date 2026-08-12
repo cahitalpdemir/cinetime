@@ -17,6 +17,8 @@ public class HallResponseDTO {
    private String name;
    private HallType hallType;
    private Long cinemaId;
+   private Integer rows;
+   private Integer seatsPerRow;
    private Integer capacity;
    private Integer createdSeatCount;
 }

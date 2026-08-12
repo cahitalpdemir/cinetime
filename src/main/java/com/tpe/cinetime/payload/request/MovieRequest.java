@@ -47,6 +47,11 @@ public class MovieRequest {
     @Pattern(regexp = "^https?://.+", message = "Poster URL must start with http:// or https://")
     private String posterUrl;
 
+    @Size(max = 500)
+    @URL(message = "Trailer URL must be a valid URL")
+    @Pattern(regexp = "^https?://.+", message = "Trailer URL must start with http:// or https://")
+    private String trailerUrl;
+
     private MovieStatus status = MovieStatus.COMING_SOON;
 
     private String specialHalls;

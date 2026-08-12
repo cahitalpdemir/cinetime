@@ -8,14 +8,17 @@ import com.tpe.cinetime.payload.response.cinema.HallResponseDTO;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.repository.cinema.HallRepository;
 import com.tpe.cinetime.repository.cinema.SeatRepository;
+import com.tpe.cinetime.repository.showtime.ShowtimeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class HallServiceTest {
@@ -23,7 +26,13 @@ class HallServiceTest {
     private final HallRepository hallRepository = mock(HallRepository.class);
     private final SeatRepository seatRepository = mock(SeatRepository.class);
     private final CinemaService cinemaService = mock(CinemaService.class);
-    private final HallService hallService = new HallService(hallRepository, seatRepository, cinemaService);
+    private final ShowtimeRepository showtimeRepository = mock(ShowtimeRepository.class);
+    private final HallService hallService = new HallService(
+            hallRepository,
+            seatRepository,
+            cinemaService,
+            showtimeRepository
+    );
 
     @Test
     void saveHallReturnsGeneratedIdAndSeatCount() {
@@ -49,8 +58,44 @@ class HallServiceTest {
         assertThat(result.getObject().getId()).isEqualTo(9L);
         assertThat(result.getObject().getHallType()).isEqualTo(HallType.IMAX);
         assertThat(result.getObject().getCinemaId()).isEqualTo(4L);
+        assertThat(result.getObject().getRows()).isEqualTo(2);
+        assertThat(result.getObject().getSeatsPerRow()).isEqualTo(3);
         assertThat(result.getObject().getCapacity()).isEqualTo(6);
         assertThat(result.getObject().getCreatedSeatCount()).isEqualTo(6);
+    }
+
+    @Test
+    void updateHallRegeneratesSeatsWhenLayoutChanges() {
+        Cinema cinema = Cinema.builder().id(4L).name("CineTime Kadikoy").build();
+        Hall hall = Hall.builder()
+                .id(9L)
+                .name("Salon 1")
+                .hallType(HallType.STANDARD)
+                .rows(2)
+                .seatsPerRow(3)
+                .cinema(cinema)
+                .build();
+        HallRequestDTO request = HallRequestDTO.builder()
+                .name("Salon 1 Updated")
+                .hallType(HallType.IMAX)
+                .rows(3)
+                .seatsPerRow(4)
+                .cinemaId(4L)
+                .build();
+
+        when(hallRepository.findById(9L)).thenReturn(Optional.of(hall));
+        when(cinemaService.getCinemaEntityById(4L)).thenReturn(cinema);
+        when(showtimeRepository.existsByHallId(9L)).thenReturn(false);
+        when(hallRepository.save(any(Hall.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        ResponseMessage<HallResponseDTO> result = hallService.updateHall(9L, request);
+
+        assertThat(result.getHttpStatus()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getObject().getName()).isEqualTo("Salon 1 Updated");
+        assertThat(result.getObject().getRows()).isEqualTo(3);
+        assertThat(result.getObject().getSeatsPerRow()).isEqualTo(4);
+        assertThat(result.getObject().getCapacity()).isEqualTo(12);
+        verify(seatRepository).deleteByHallId(9L);
     }
 
     @Test
@@ -82,9 +127,13 @@ class HallServiceTest {
         assertThat(result.getObject()).hasSize(2);
         assertThat(result.getObject().get(0).getName()).isEqualTo("IMAX Salon");
         assertThat(result.getObject().get(0).getHallType()).isEqualTo(HallType.IMAX);
+        assertThat(result.getObject().get(0).getRows()).isEqualTo(6);
+        assertThat(result.getObject().get(0).getSeatsPerRow()).isEqualTo(10);
         assertThat(result.getObject().get(0).getCapacity()).isEqualTo(60);
         assertThat(result.getObject().get(1).getName()).isEqualTo("Salon 1");
         assertThat(result.getObject().get(1).getHallType()).isEqualTo(HallType.STANDARD);
+        assertThat(result.getObject().get(1).getRows()).isEqualTo(5);
+        assertThat(result.getObject().get(1).getSeatsPerRow()).isEqualTo(8);
         assertThat(result.getObject().get(1).getCapacity()).isEqualTo(40);
     }
 }

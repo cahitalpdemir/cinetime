@@ -10,6 +10,7 @@ import com.tpe.cinetime.payload.request.cinema.CinemaRequestDTO;
 import com.tpe.cinetime.payload.response.cinema.CinemaResponseDTO;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.repository.cinema.CinemaRepository;
+import com.tpe.cinetime.repository.cinema.HallRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class CinemaService {
 
     private final CinemaRepository cinemaRepository;
+    private final HallRepository hallRepository;
     private final CinemaMapper cinemaMapper;
 
     @Transactional
@@ -35,10 +37,53 @@ public class CinemaService {
         Cinema cinema = cinemaMapper.mapCinemaRequestDTOToCinema(cinemaRequestDTO);
         Cinema savedCinema = cinemaRepository.save(cinema);
 
+        return buildCinemaResponse(
+                savedCinema,
+                SuccessMessages.CINEMA_SAVED_SUCCESSFULLY,
+                HttpStatus.CREATED
+        );
+    }
+
+    @Transactional
+    public ResponseMessage<CinemaResponseDTO> updateCinema(Long cinemaId, CinemaRequestDTO cinemaRequestDTO) {
+        Cinema cinema = getCinemaEntityById(cinemaId);
+
+        if (cinemaRepository.existsByPhoneAndIdNot(cinemaRequestDTO.getPhone(), cinemaId)) {
+            throw new BadRequestException(ErrorMessages.CINEMA_PHONE_ALREADY_EXISTS);
+        }
+
+        cinema.setName(cinemaRequestDTO.getName());
+        cinema.setCity(cinemaRequestDTO.getCity());
+        cinema.setDistrict(cinemaRequestDTO.getDistrict());
+        cinema.setAddress(cinemaRequestDTO.getAddress());
+        cinema.setPhone(cinemaRequestDTO.getPhone());
+        cinema.setLatitude(cinemaRequestDTO.getLatitude());
+        cinema.setLongitude(cinemaRequestDTO.getLongitude());
+
+        Cinema savedCinema = cinemaRepository.save(cinema);
+
+        return buildCinemaResponse(
+                savedCinema,
+                SuccessMessages.CINEMA_UPDATED_SUCCESSFULLY,
+                HttpStatus.OK
+        );
+    }
+
+    @Transactional
+    public ResponseMessage<CinemaResponseDTO> deleteCinema(Long cinemaId) {
+        Cinema cinema = getCinemaEntityById(cinemaId);
+
+        if (hallRepository.existsByCinema_Id(cinemaId)) {
+            throw new BadRequestException(ErrorMessages.CINEMA_HAS_HALLS);
+        }
+
+        CinemaResponseDTO response = cinemaMapper.mapCinemaToResponseDTO(cinema);
+        cinemaRepository.delete(cinema);
+
         return ResponseMessage.<CinemaResponseDTO>builder()
-                .object(cinemaMapper.mapCinemaToResponseDTO(savedCinema))
-                .message(SuccessMessages.CINEMA_SAVED_SUCCESSFULLY)
-                .httpStatus(HttpStatus.CREATED)
+                .object(response)
+                .message(SuccessMessages.CINEMA_DELETED_SUCCESSFULLY)
+                .httpStatus(HttpStatus.OK)
                 .build();
     }
 
@@ -56,20 +101,30 @@ public class CinemaService {
     }
 
     public ResponseMessage<CinemaResponseDTO> getCinemaById(Long cinemaId) {
-        Cinema cinema = cinemaRepository.findById(cinemaId)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format(ErrorMessages.CINEMA_NOT_FOUND, cinemaId)));
+        Cinema cinema = getCinemaEntityById(cinemaId);
 
-        return ResponseMessage.<CinemaResponseDTO>builder()
-                .object(cinemaMapper.mapCinemaToResponseDTO(cinema))
-                .message(SuccessMessages.CINEMA_FETCHED_SUCCESSFULLY)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return buildCinemaResponse(
+                cinema,
+                SuccessMessages.CINEMA_FETCHED_SUCCESSFULLY,
+                HttpStatus.OK
+        );
     }
 
     public Cinema getCinemaEntityById(Long cinemaId) {
         return cinemaRepository.findById(cinemaId)
                 .orElseThrow(() -> new NotFoundException(
                         String.format(ErrorMessages.CINEMA_NOT_FOUND, cinemaId)));
+    }
+
+    private ResponseMessage<CinemaResponseDTO> buildCinemaResponse(
+            Cinema cinema,
+            String message,
+            HttpStatus httpStatus
+    ) {
+        return ResponseMessage.<CinemaResponseDTO>builder()
+                .object(cinemaMapper.mapCinemaToResponseDTO(cinema))
+                .message(message)
+                .httpStatus(httpStatus)
+                .build();
     }
 }
