@@ -38,7 +38,7 @@ import lombok.Setter;
 
 
 public class Seat {
-     @Id
+    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long id;
 

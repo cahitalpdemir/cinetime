@@ -20,6 +20,7 @@ import com.tpe.cinetime.repository.booking.BookingSeatRepository;
 import com.tpe.cinetime.repository.cinema.HallRepository;
 import com.tpe.cinetime.repository.cinema.SeatRepository;
 import com.tpe.cinetime.repository.showtime.ShowtimeRepository;
+import com.tpe.cinetime.service.SeatLockService;
 import com.tpe.cinetime.service.booking.BookingCancellationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,8 @@ public class ShowtimeService {
     private final ShowtimeMapper showtimeMapper;
     private final BookingSeatRepository bookingSeatRepository;
     private final BookingCancellationService bookingCancellationService;
+
+    private final SeatLockService seatLockService;
 
     //create a new showtime, validates past datetime and hall conflicts
     @Transactional
@@ -189,6 +192,10 @@ public class ShowtimeService {
         Set<Long> bookedSeatIds = bookingSeatRepository.findBookedSeatIdsByShowtimeId(
                 showtime.getId(), ACTIVE_BOOKING_STATUSES);
 
+        // YENİ EKLENEN — Redis'te kilitli olan koltukları da sorguluyoruz
+        List<Long> allSeatIds = allSeats.stream().map(Seat::getId).toList();
+        Set<Long> lockedSeatIds = seatLockService.findLockedSeatIds(showtime.getId(), allSeatIds);
+
         List<SeatAvailabilityResponse> seatResponses = allSeats.stream()
            .map(seat -> SeatAvailabilityResponse.builder()
                         .seatId(seat.getId())
@@ -196,6 +203,7 @@ public class ShowtimeService {
                         .seatNumber(seat.getSeatNumber())
                         .seatType(seat.getSeatType())
                         .isBooked(bookedSeatIds.contains(seat.getId()))
+                        .isLocked(lockedSeatIds.contains(seat.getId()))
                         .build())
                 .collect(Collectors.toList());
 

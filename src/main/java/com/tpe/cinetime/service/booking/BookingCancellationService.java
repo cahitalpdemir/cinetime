@@ -12,6 +12,7 @@ import com.tpe.cinetime.exception.BadRequestException;
 import com.tpe.cinetime.repository.booking.BookingRepository;
 import com.tpe.cinetime.repository.booking.PaymentRepository;
 import com.tpe.cinetime.repository.booking.TicketRepository;
+import com.tpe.cinetime.service.SeatLockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class BookingCancellationService {
     private final BookingRepository bookingRepository;
     private final PaymentRepository paymentRepository;
     private final TicketRepository ticketRepository;
+    private final SeatLockService seatLockService;
 
     @Value("${app.booking.cancellation-cutoff-minutes:120}")
     private long cancellationCutoffMinutes;
@@ -61,6 +63,24 @@ public class BookingCancellationService {
                     booking.setStatus(BookingStatus.CANCELLED);
                     bookingRepository.save(booking);
                 });
+    }
+
+    /**
+     * Booking'e ait Redis kilidi varsa serbest bırakır.
+     * lockToken null ise (örn. CONFIRMED bir booking'de zaten PaymentService
+     * ödeme anında kilidi silmişti) hiçbir şey yapmaz.
+     */
+    private void releaseSeatLockIfPresent(Booking booking) {
+        if (booking.getLockToken() == null) {
+            return;
+        }
+
+        List<Long> seatIds = booking.getBookingSeats().stream()
+                .map(bs -> bs.getSeat().getId())
+                .toList();
+
+        seatLockService.releaseAllSeatsForToken(
+                booking.getShowtime().getId(), seatIds, booking.getLockToken());
     }
 
     private void validateCancellationWindow(Showtime showtime) {

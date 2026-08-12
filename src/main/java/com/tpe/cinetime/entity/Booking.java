@@ -53,6 +53,9 @@ public class Booking {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(length = 36)
+    private String lockToken;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

@@ -12,11 +12,13 @@ import com.tpe.cinetime.payload.request.booking.PaymentRequest;
 import com.tpe.cinetime.payload.response.booking.PaymentResponse;
 import com.tpe.cinetime.payload.responseMessage.ResponseMessage;
 import com.tpe.cinetime.repository.booking.PaymentRepository;
+import com.tpe.cinetime.service.SeatLockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,6 +29,8 @@ public class PaymentService {
     private final BookingService bookingService;
     private final TicketService ticketService;
     private final BookingMapper bookingMapper;
+    private final SeatLockService seatLockService; // YENİ EKLENEN dependency
+
 
     @Transactional
     public ResponseMessage<PaymentResponse> processPayment(Long bookingId, PaymentRequest request) {
@@ -63,6 +67,15 @@ public class PaymentService {
         Payment saved = paymentRepository.save(payment);
         ticketService.generateTicketsForBooking(booking);
         bookingService.updateShowtimeSoldOutStatus(booking.getShowtime().getId());
+
+        // YENİ EKLENEN — ödeme başarılı, artık Redis kilidine gerek yok, serbest bırakıyoruz
+        if (booking.getLockToken() != null) {
+            List<Long> seatIds = booking.getBookingSeats().stream()
+                    .map(bs -> bs.getSeat().getId())
+                    .toList();
+            seatLockService.releaseAllSeatsForToken(
+                    booking.getShowtime().getId(), seatIds, booking.getLockToken());
+        }
 
         return ResponseMessage.<PaymentResponse>builder()
                 .object(bookingMapper.toPaymentResponse(saved))

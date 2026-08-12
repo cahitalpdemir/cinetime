@@ -136,5 +136,23 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(status).body(response);
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ResponseMessage<?>> handleUnauthorizedException(
+            UnauthorizedException exception
+    ) {
+        ResponseMessage<?> response = ResponseMessage.builder()
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .message(exception.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(SeatUnavailableException.class)
+    public ResponseEntity<ResponseMessage<?>> handleSeatUnavailableException(SeatUnavailableException exception) {
+        return error(HttpStatus.CONFLICT, exception.getMessage());
+    }
+
+
 }
 

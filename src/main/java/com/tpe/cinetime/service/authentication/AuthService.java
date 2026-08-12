@@ -6,6 +6,7 @@ import com.tpe.cinetime.entity.Role;
 import com.tpe.cinetime.entity.User;
 import com.tpe.cinetime.enums.RoleName;
 import com.tpe.cinetime.exception.BadRequestException;
+import com.tpe.cinetime.exception.UnauthorizedException;
 import com.tpe.cinetime.payload.mapper.UserMapper;
 import com.tpe.cinetime.payload.request.authentication.*;
 import com.tpe.cinetime.payload.response.authentication.LoginResponseDTO;
@@ -149,7 +150,7 @@ public class AuthService {
         //Redis'teki refreshToken ile karsilastir
         boolean isRefreshTokenValid = jwtUtil.isRefreshTokenValid(userId, refreshToken);
         if (!isRefreshTokenValid) {
-                throw new BadRequestException(ErrorMessages.INVALID_OR_EXPIRED_REFRESH_TOKEN);
+                throw new UnauthorizedException(ErrorMessages.INVALID_OR_EXPIRED_REFRESH_TOKEN);
         }
 
         //Build user details

@@ -8,6 +8,7 @@ import com.tpe.cinetime.enums.BookingStatus;
 import com.tpe.cinetime.enums.ShowtimeStatus;
 import com.tpe.cinetime.exception.BadRequestException;
 import com.tpe.cinetime.exception.NotFoundException;
+import com.tpe.cinetime.exception.SeatUnavailableException;
 import com.tpe.cinetime.payload.mapper.BookingMapper;
 import com.tpe.cinetime.payload.request.booking.BookingRequest;
 import com.tpe.cinetime.payload.response.booking.BookingResponse;
@@ -16,6 +17,7 @@ import com.tpe.cinetime.repository.booking.BookingRepository;
 import com.tpe.cinetime.repository.booking.BookingSeatRepository;
 import com.tpe.cinetime.repository.cinema.SeatRepository;
 import com.tpe.cinetime.repository.showtime.ShowtimeRepository;
+import com.tpe.cinetime.service.SeatLockService;
 import com.tpe.cinetime.service.helpers.MethodHelper;
 import com.tpe.cinetime.service.showtime.ShowtimeService;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +48,20 @@ public class BookingService {
     private final MethodHelper methodHelper;
     private final BookingCancellationService bookingCancellationService;
 
+    private final SeatLockService seatLockService;
+
     @Transactional
     public ResponseMessage<BookingResponse> createBooking(BookingRequest request) {
         User user = methodHelper.currentUser();
+
+        // YENİ EKLENEN — Redis kilit doğrulaması
+        // DB kontrolünden ÖNCE yapıyoruz: eğer koltuklar bu kullanıcının kilidine ait değilse,
+        // gereksiz yere pessimistic lock alıp DB sorgusu yapmaya hiç gerek yok
+        if (!seatLockService.areAllSeatsOwnedByToken(
+                request.getShowtimeId(), request.getSeatIds(), request.getLockToken())) {
+            throw new SeatUnavailableException(ErrorMessages.SEAT_LOCK_EXPIRED_OR_INVALID);
+        }
+
         Showtime showtime = showtimeRepository.findByIdForUpdate(request.getShowtimeId())
                 .orElseThrow(() -> new NotFoundException(
                         String.format(ErrorMessages.SHOWTIME_NOT_FOUND, request.getShowtimeId())));
@@ -56,6 +69,8 @@ public class BookingService {
         showtimeService.validateShowtimeForBooking(showtime);
         validateShowtimeNotInPast(showtime);
         validateSeatSelection(request.getSeatIds());
+
+
 
         Set<Long> alreadyBookedSeatIds = bookingSeatRepository.findBookedSeatIdsByShowtimeId(
                 showtime.getId(), ACTIVE_BOOKING_STATUSES);
@@ -71,6 +86,7 @@ public class BookingService {
                 .showtime(showtime)
                 .status(BookingStatus.PENDING)
                 .totalPrice(totalPrice)
+                .lockToken(request.getLockToken()) // YENİ EKLENEN — ileride bu token'la kilidi bulup silebilelim diye
                 .build();
 
         List<BookingSeat> bookingSeats = selectedSeats.stream()
@@ -85,6 +101,7 @@ public class BookingService {
         booking.setBookingSeats(bookingSeats);
 
         Booking saved = bookingRepository.save(booking);
+
 
         return ResponseMessage.<BookingResponse>builder()
                 .object(bookingMapper.toResponse(saved))
