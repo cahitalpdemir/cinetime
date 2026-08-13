@@ -12,6 +12,7 @@ import com.tpe.cinetime.repository.cinema.HallRepository;
 import com.tpe.cinetime.repository.cinema.SeatRepository;
 import com.tpe.cinetime.repository.showtime.ShowtimeRepository;
 import com.tpe.cinetime.payload.mapper.ShowtimeMapper;
+import com.tpe.cinetime.service.SeatLockService;
 import com.tpe.cinetime.service.booking.BookingCancellationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,6 +45,8 @@ class ShowtimeSeatAvailabilityTest {
     private BookingSeatRepository bookingSeatRepository;
     @Mock
     private BookingCancellationService bookingCancellationService;
+    @Mock
+    private SeatLockService seatLockService; // YENİ EKLENEN
 
     @InjectMocks
     private ShowtimeService showtimeService;
@@ -60,6 +63,11 @@ class ShowtimeSeatAvailabilityTest {
         when(bookingSeatRepository.findBookedSeatIdsByShowtimeId(
                 10L, List.of(BookingStatus.PENDING, BookingStatus.CONFIRMED)))
                 .thenReturn(Set.of(100L));
+
+        // YENİ EKLENEN — findLockedSeatIds artık ShowtimeService içinde çağrılıyor,
+        // NPE almamak için boş bir Set dönmesini sağlıyoruz (bu testte kilit senaryosu yok)
+        when(seatLockService.findLockedSeatIds(10L, List.of(100L, 101L)))
+                .thenReturn(Set.of());
 
         ResponseMessage<List<SeatAvailabilityResponse>> response =
                 showtimeService.getShowtimeSeats(10L);
