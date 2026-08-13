@@ -54,4 +54,16 @@ public final class ErrorMessages {
     public static final String SHOWTIME_CANCELLATION_AFTER_START =
             "A showtime cannot be cancelled after it has started";
     public static final String SHOWTIME_IS_SOLD_OUT = "All seats are sold out for this showtime";
+
+    //Seat Lock
+    public static final String SEATS_ALREADY_LOCKED =
+            "One or more selected seats are currently being reserved by another user";
+    public static final String SEAT_LOCK_EXPIRED_OR_INVALID =
+            "Your seat reservation has expired or is invalid. Please select seats again";
+    public static final String SEAT_LOCK_ACCESS_DENIED =
+            "You do not have access to this seat reservation";
+    public static final String SEAT_RESERVATION_FAILED =
+            "An error occurred while reserving your seats. Please try again";
+    public static final String BOOKING_NOT_FOUND = "Booking not found. Booking id: %d";
+    public static final String BOOKING_NOT_FOUND_BY_LOCK_TOKEN = "Booking not found for the given lock token";
 }
