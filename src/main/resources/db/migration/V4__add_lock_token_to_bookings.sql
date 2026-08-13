@@ -1,1 +1,1 @@
-ALTER TABLE bookings ADD COLUMN lock_token VARCHAR(36);
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS lock_token VARCHAR(36);
