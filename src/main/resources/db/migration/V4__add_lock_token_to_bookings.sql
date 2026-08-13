@@ -1,0 +1,1 @@
+ALTER TABLE bookings ADD COLUMN lock_token VARCHAR(36);
